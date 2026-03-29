@@ -1,0 +1,49 @@
+<header class="flex items-center justify-between px-4 h-14 bg-white sticky top-0 z-50">
+  
+  <div class="flex items-center gap-4">
+    <a href="/" class="text-xl font-bold tracking-tight text-slate-800 flex items-center">
+      Officer Matrimony BD
+    </a>
+  </div>
+
+  <div class="flex-grow max-w-[720px] mx-4">
+    <div class="flex items-center w-full">
+      <div class="relative w-full group">
+        <input 
+          type="text" 
+          placeholder="Search profiles..." 
+          class="w-full h-10 px-4 py-2 border border-gray-300 rounded-l-full focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
+        />
+      </div>
+      <button class="h-10 px-5 bg-gray-50 border border-l-0 border-gray-300 rounded-r-full hover:bg-gray-100 transition">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-600">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="flex items-center gap-3">
+    <button (click)="onPost()" 
+      class="flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 rounded-full text-sm font-medium transition">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+      </svg>
+      <span>Post</span>
+    </button>
+
+    <button class="p-2 hover:bg-gray-100 rounded-full relative transition">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
+      </svg>
+      <span class="absolute top-2 right-2 w-2 h-2 bg-red-600 rounded-full border border-white"></span>
+    </button>
+
+    <button class="ml-1">
+      <div class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-white text-xs font-bold">
+        JD
+      </div>
+    </button>
+  </div>
+
+</header>

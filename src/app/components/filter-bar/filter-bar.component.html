@@ -1,0 +1,89 @@
+<div class="flex flex-col gap-6">
+  
+  <button (click)="filterService.resetAll()" 
+          class="w-full py-2 text-sm font-bold text-red-600 bg-red-50 hover:bg-red-100 rounded-md transition border border-red-200">
+    Reset All Filters
+  </button>
+
+  <div class="space-y-5">
+    
+    <div class="flex flex-col">
+      <label class="text-[11px] uppercase tracking-wider font-bold text-gray-400 mb-2">Looking For</label>
+      <select [value]="filterService.selectedGender()" (change)="filterService.selectedGender.set($any($event.target).value)"
+              class="w-full border border-gray-300 rounded-md px-3 py-2 bg-gray-50 text-sm focus:ring-2 focus:ring-slate-800 outline-none">
+        <option value="">Any</option>
+        <option value="Male">Groom (Male)</option>
+        <option value="Female">Bride (Female)</option>
+      </select>
+    </div>
+
+    <div class="flex flex-col">
+      <label class="text-[11px] uppercase tracking-wider font-bold text-gray-400 mb-2">Service</label>
+      <select [value]="filterService.selectedArms()" (change)="filterService.selectedArms.set($any($event.target).value)"
+              class="w-full border border-gray-300 rounded-md px-3 py-2 bg-gray-50 text-sm focus:ring-2 focus:ring-slate-800 outline-none">
+        <option value="">All Arms</option>
+        <option value="Army">Army</option>
+        <option value="Navy">Navy</option>
+        <option value="Air Force">Air Force</option>
+      </select>
+    </div>
+
+    <div class="flex flex-col">
+      <label class="text-[11px] uppercase tracking-wider font-bold text-gray-400 mb-2">Officer's Link</label>
+      <select [value]="filterService.selectedLinks()" (change)="filterService.selectedLinks.set($any($event.target).value)"
+              class="w-full border border-gray-300 rounded-md px-3 py-2 bg-gray-50 text-sm focus:ring-2 focus:ring-slate-800 outline-none">
+        <option value="">Any Link</option>
+        <option value="Self">Self</option>
+        <option value="Parent">Parent</option>
+        <option value="GrandParent">Grand Parent</option>
+      </select>
+    </div>
+
+    <div class="flex flex-col">
+      <label class="text-[11px] uppercase tracking-wider font-bold text-gray-400 mb-2">Status</label>
+      <select [value]="filterService.selectedStatus()" (change)="filterService.selectedStatus.set($any($event.target).value)"
+              class="w-full border border-gray-300 rounded-md px-3 py-2 bg-gray-50 text-sm focus:ring-2 focus:ring-slate-800 outline-none">
+        <option value="">Any Status</option>
+        <option value="Single">Single</option>
+        <option value="Married">Married</option>
+        <option value="Divorced">Divorced</option>
+        <option value="Separated">Separated</option>
+        <option value="Widow">Widow (Husband died)</option>
+        <option value="Widower">Widower (Wife died)</option>
+      </select>
+    </div>
+
+    <div class="flex flex-col">
+      <label class="text-[11px] uppercase tracking-wider font-bold text-gray-400 mb-2">Religion</label>
+      <select [value]="filterService.selectedReligion()" (change)="filterService.selectedReligion.set($any($event.target).value)"
+              class="w-full border border-gray-300 rounded-md px-3 py-2 bg-gray-50 text-sm focus:ring-2 focus:ring-slate-800 outline-none">
+        <option value="">Any Religion</option>
+        <option value="Muslim">Muslim</option>
+        <option value="Hindu">Hindu</option>
+        <option value="Christian">Christian</option>
+        <option value="Buddha">Buddha</option>
+      </select>
+    </div>
+
+    <div class="flex flex-col">
+      <label class="text-[11px] uppercase tracking-wider font-bold text-gray-400 mb-2">Age Range</label>
+      <div class="flex items-center gap-2">
+        <select [value]="filterService.ageStart()" (change)="filterService.ageStart.set(+$any($event.target).value)" 
+                class="border border-gray-300 rounded-md px-2 py-2 bg-gray-50 text-sm w-full text-center outline-none focus:ring-2 focus:ring-slate-800">
+          @for (age of filterService.ageOptions; track age) { <option [value]="age">{{age}}</option> }
+        </select>
+        <span class="text-gray-400 font-bold">~</span>
+        <select [value]="filterService.ageEnd()" (change)="filterService.ageEnd.set(+$any($event.target).value)"
+                class="border border-gray-300 rounded-md px-2 py-2 bg-gray-50 text-sm w-full text-center outline-none focus:ring-2 focus:ring-slate-800">
+          @for (age of filterService.ageOptions; track age) { <option [value]="age">{{age}}</option> }
+        </select>
+      </div>
+    </div>
+
+  </div>
+
+  <button (click)="filterService.executeSearch()"
+          class="w-full py-3 mt-4 bg-slate-800 hover:bg-slate-900 text-white font-bold rounded-md shadow-md transition-all active:scale-95">
+    Find
+  </button>
+</div>
