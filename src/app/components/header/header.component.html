@@ -1,10 +1,15 @@
 <header class="flex items-center justify-between px-4 h-14 bg-white sticky top-0 z-50">
   
-  <div class="flex items-center gap-4">
-    <a href="/" class="text-xl font-bold tracking-tight text-slate-800 flex items-center">
-      Officer Matrimony BD
-    </a>
+  <div class="flex items-center gap-2">
+    <button (click)="uiService.toggleSidebar()" class="p-2 hover:bg-gray-100 rounded-full transition">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+      </svg>
+    </button>
+    <a href="/" class="text-xl font-bold text-slate-800">Officer Matrimony BD</a>
   </div>
+
+  
 
   <div class="flex-grow max-w-[720px] mx-4">
     <div class="flex items-center w-full">

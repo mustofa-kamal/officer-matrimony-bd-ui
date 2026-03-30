@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core'; // Add inject
 import { CommonModule } from '@angular/common';
+import { UiService } from '../../services/ui.service'; // Import service
 
 @Component({
   selector: 'app-header',
@@ -9,7 +10,9 @@ import { CommonModule } from '@angular/common';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  // Logic for the 'Post' button can go here later
+  // Inject it here as public
+  public uiService = inject(UiService);
+
   onPost() {
     console.log('Post button clicked');
   }

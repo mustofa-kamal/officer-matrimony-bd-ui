@@ -1,13 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-// 1. Import your custom components here
 import { HeaderComponent } from './components/header/header.component';
 import { FilterBarComponent } from './components/filter-bar/filter-bar.component';
+
+// 1. You must import these two
+import { UiService } from './services/ui.service'; 
+import { ProfileService } from './services/profile.service'; 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  // 2. Add them to this imports array
   imports: [
     RouterOutlet, 
     HeaderComponent, 
@@ -18,4 +20,8 @@ import { FilterBarComponent } from './components/filter-bar/filter-bar.component
 })
 export class AppComponent {
   title = 'officer-matrimony-bd-ui';
+
+  // 2. You must inject them as PUBLIC
+  public uiService = inject(UiService);
+  public profileService = inject(ProfileService); 
 }
