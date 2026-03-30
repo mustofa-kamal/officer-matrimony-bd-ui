@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, signal, computed } from '@angular/core';
 import { OfficerLinkProfile } from '../models/profile.model';
 
 @Injectable({ providedIn: 'root' })
@@ -29,21 +29,28 @@ export class ProfileService {
 
   displayProfiles = signal<OfficerLinkProfile[]>(this.rawProfiles);
 
-  applyFilters(criteria: any) {
-    const filtered = this.rawProfiles.filter(profile => {
-      return (
-        (!criteria.gender || profile.gender === criteria.gender) &&
-        (!criteria.arms || profile.serviceBranch === criteria.arms) &&
-        (!criteria.link || profile.officerLink === criteria.link) &&
-        (!criteria.status || profile.maritalStatus === criteria.status) &&
-        (!criteria.religion || profile.religion === criteria.religion) &&
-        (profile.age >= criteria.ageStart && profile.age <= criteria.ageEnd)
-      );
-    });
-    this.displayProfiles.set(filtered);
+ applyFilters(criteria: any) {
+  // 1. Filter the raw data based on the criteria
+  const filtered = this.rawProfiles.filter(profile => {
+    return (
+      (!criteria.gender || profile.gender === criteria.gender) &&
+      (!criteria.arms || profile.serviceBranch === criteria.arms) &&
+      (!criteria.link || profile.officerLink === criteria.link) &&
+      (!criteria.status || profile.maritalStatus === criteria.status) &&
+      (!criteria.religion || profile.religion === criteria.religion) &&
+      (!criteria.education || profile.educationMedium === criteria.education) &&
+      (profile.age >= criteria.ageStart && profile.age <= criteria.ageEnd)
+    );
+  });
+
+  // 2. Update the display signal
+  // THIS TRIGGERS THE HTML TO RE-RENDER THE @FOR LOOP
+  this.displayProfiles.set(filtered);
   }
 
   resetProfiles() {
     this.displayProfiles.set(this.rawProfiles);
   }
+
+  profileCount = computed(() => this.displayProfiles().length);
 }

@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
 import { FilterBarComponent } from './components/filter-bar/filter-bar.component';
+import { FilterService } from './services/filter.service'; // 1. Import it
 
 // 1. You must import these two
 import { UiService } from './services/ui.service'; 
@@ -24,4 +25,5 @@ export class AppComponent {
   // 2. You must inject them as PUBLIC
   public uiService = inject(UiService);
   public profileService = inject(ProfileService); 
+  public filterService = inject(FilterService); // 2. Inject it here
 }

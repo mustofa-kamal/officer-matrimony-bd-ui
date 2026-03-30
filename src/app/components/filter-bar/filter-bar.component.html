@@ -1,89 +1,95 @@
-<div class="flex flex-col gap-6">
+<div class="flex flex-col gap-8 pb-20">
   
-  <button (click)="filterService.resetAll()" 
-          class="w-full py-2 text-sm font-bold text-red-600 bg-red-50 hover:bg-red-100 rounded-md transition border border-red-200">
-    Reset All Filters
-  </button>
-
-  <div class="space-y-5">
-    
-    <div class="flex flex-col">
-      <label class="text-[11px] uppercase tracking-wider font-bold text-gray-400 mb-2">Looking For</label>
-      <select [value]="filterService.selectedGender()" (change)="filterService.selectedGender.set($any($event.target).value)"
-              class="w-full border border-gray-300 rounded-md px-3 py-2 bg-gray-50 text-sm focus:ring-2 focus:ring-slate-800 outline-none">
-        <option value="">Any</option>
-        <option value="Male">Groom (Male)</option>
-        <option value="Female">Bride (Female)</option>
-      </select>
+  <div class="border-b border-gray-100 pb-5">
+    <label class="text-[11px] uppercase tracking-wider font-black text-gray-400 mb-3 block">Looking For</label>
+    <div class="flex gap-2">
+      <button (click)="filterService.selectedGender.set('Male')" 
+              [class.bg-blue-600]="filterService.selectedGender() === 'Male'"
+              [class.text-white]="filterService.selectedGender() === 'Male'"
+              [class.border-blue-600]="filterService.selectedGender() === 'Male'"
+              class="flex-1 py-2 rounded-full border border-gray-200 text-xs font-bold transition-all hover:border-blue-300">Groom</button>
+      <button (click)="filterService.selectedGender.set('Female')" 
+              [class.bg-blue-600]="filterService.selectedGender() === 'Female'"
+              [class.text-white]="filterService.selectedGender() === 'Female'"
+              [class.border-blue-600]="filterService.selectedGender() === 'Female'"
+              class="flex-1 py-2 rounded-full border border-gray-200 text-xs font-bold transition-all hover:border-blue-300">Bride</button>
     </div>
-
-    <div class="flex flex-col">
-      <label class="text-[11px] uppercase tracking-wider font-bold text-gray-400 mb-2">Service</label>
-      <select [value]="filterService.selectedArms()" (change)="filterService.selectedArms.set($any($event.target).value)"
-              class="w-full border border-gray-300 rounded-md px-3 py-2 bg-gray-50 text-sm focus:ring-2 focus:ring-slate-800 outline-none">
-        <option value="">All Arms</option>
-        <option value="Army">Army</option>
-        <option value="Navy">Navy</option>
-        <option value="Air Force">Air Force</option>
-      </select>
-    </div>
-
-    <div class="flex flex-col">
-      <label class="text-[11px] uppercase tracking-wider font-bold text-gray-400 mb-2">Officer's Link</label>
-      <select [value]="filterService.selectedLinks()" (change)="filterService.selectedLinks.set($any($event.target).value)"
-              class="w-full border border-gray-300 rounded-md px-3 py-2 bg-gray-50 text-sm focus:ring-2 focus:ring-slate-800 outline-none">
-        <option value="">Any Link</option>
-        <option value="Self">Self</option>
-        <option value="Parent">Parent</option>
-        <option value="GrandParent">Grand Parent</option>
-      </select>
-    </div>
-
-    <div class="flex flex-col">
-      <label class="text-[11px] uppercase tracking-wider font-bold text-gray-400 mb-2">Status</label>
-      <select [value]="filterService.selectedStatus()" (change)="filterService.selectedStatus.set($any($event.target).value)"
-              class="w-full border border-gray-300 rounded-md px-3 py-2 bg-gray-50 text-sm focus:ring-2 focus:ring-slate-800 outline-none">
-        <option value="">Any Status</option>
-        <option value="Single">Single</option>
-        <option value="Married">Married</option>
-        <option value="Divorced">Divorced</option>
-        <option value="Separated">Separated</option>
-        <option value="Widow">Widow (Husband died)</option>
-        <option value="Widower">Widower (Wife died)</option>
-      </select>
-    </div>
-
-    <div class="flex flex-col">
-      <label class="text-[11px] uppercase tracking-wider font-bold text-gray-400 mb-2">Religion</label>
-      <select [value]="filterService.selectedReligion()" (change)="filterService.selectedReligion.set($any($event.target).value)"
-              class="w-full border border-gray-300 rounded-md px-3 py-2 bg-gray-50 text-sm focus:ring-2 focus:ring-slate-800 outline-none">
-        <option value="">Any Religion</option>
-        <option value="Muslim">Muslim</option>
-        <option value="Hindu">Hindu</option>
-        <option value="Christian">Christian</option>
-        <option value="Buddha">Buddha</option>
-      </select>
-    </div>
-
-    <div class="flex flex-col">
-      <label class="text-[11px] uppercase tracking-wider font-bold text-gray-400 mb-2">Age Range</label>
-      <div class="flex items-center gap-2">
-        <select [value]="filterService.ageStart()" (change)="filterService.ageStart.set(+$any($event.target).value)" 
-                class="border border-gray-300 rounded-md px-2 py-2 bg-gray-50 text-sm w-full text-center outline-none focus:ring-2 focus:ring-slate-800">
-          @for (age of filterService.ageOptions; track age) { <option [value]="age">{{age}}</option> }
-        </select>
-        <span class="text-gray-400 font-bold">~</span>
-        <select [value]="filterService.ageEnd()" (change)="filterService.ageEnd.set(+$any($event.target).value)"
-                class="border border-gray-300 rounded-md px-2 py-2 bg-gray-50 text-sm w-full text-center outline-none focus:ring-2 focus:ring-slate-800">
-          @for (age of filterService.ageOptions; track age) { <option [value]="age">{{age}}</option> }
-        </select>
-      </div>
-    </div>
-
   </div>
 
-  <button (click)="filterService.executeSearch()"
-          class="w-full py-3 mt-4 bg-slate-800 hover:bg-slate-900 text-white font-bold rounded-md shadow-md transition-all active:scale-95">
-    Find
+  <div class="border-b border-gray-100 pb-5">
+    <label class="text-[11px] uppercase tracking-wider font-black text-gray-400 mb-3 block">Age Range</label>
+    <div class="flex items-center gap-2">
+      <select [value]="filterService.ageStart()" (change)="filterService.ageStart.set(+$any($event.target).value)" 
+              class="flex-1 bg-transparent text-sm font-medium border-none focus:ring-0 cursor-pointer text-gray-700">
+        @for (age of filterService.ageOptions; track age) { <option [value]="age">{{age}} Years</option> }
+      </select>
+      <span class="text-gray-300">~</span>
+      <select [value]="filterService.ageEnd()" (change)="filterService.ageEnd.set(+$any($event.target).value)"
+              class="flex-1 bg-transparent text-sm font-medium border-none focus:ring-0 cursor-pointer text-gray-700">
+        @for (age of filterService.ageOptions; track age) { <option [value]="age">{{age}} Years</option> }
+      </select>
+    </div>
+  </div>
+
+  <div class="border-b border-gray-100 pb-5">
+    <label class="text-[11px] uppercase tracking-wider font-black text-gray-400 mb-2 block">Service</label>
+    <select [value]="filterService.selectedArms()" (change)="filterService.selectedArms.set($any($event.target).value)"
+            class="w-full bg-transparent text-sm font-medium border-none focus:ring-0 p-0 text-blue-600 cursor-pointer">
+      <option value="">All Branches</option>
+      <option value="Army">Army</option>
+      <option value="Navy">Navy</option>
+      <option value="Air Force">Air Force</option>
+    </select>
+  </div>
+
+  <div class="border-b border-gray-100 pb-5">
+    <label class="text-[11px] uppercase tracking-wider font-black text-gray-400 mb-2 block">Officer's Link</label>
+    <select [value]="filterService.selectedLinks()" (change)="filterService.selectedLinks.set($any($event.target).value)"
+            class="w-full bg-transparent text-sm font-medium border-none focus:ring-0 p-0 text-blue-600 cursor-pointer">
+      <option value="">Any Link</option>
+      <option value="Self">Self</option>
+      <option value="Parent">Parent</option>
+      <option value="GrandParent">Grand Parent</option>
+    </select>
+  </div>
+
+  <div class="border-b border-gray-100 pb-5">
+    <label class="text-[11px] uppercase tracking-wider font-black text-gray-400 mb-2 block">Status</label>
+    <select [value]="filterService.selectedStatus()" (change)="filterService.selectedStatus.set($any($event.target).value)"
+            class="w-full bg-transparent text-sm font-medium border-none focus:ring-0 p-0 text-blue-600 cursor-pointer">
+      <option value="">Any Status</option>
+      <option value="Single">Single</option>
+      <option value="Married">Married</option>
+      <option value="Divorced">Divorced</option>
+      <option value="Separated">Separated</option>
+    </select>
+  </div>
+
+  <div class="border-b border-gray-100 pb-5">
+    <label class="text-[11px] uppercase tracking-wider font-black text-gray-400 mb-2 block">Religion</label>
+    <select [value]="filterService.selectedReligion()" (change)="filterService.selectedReligion.set($any($event.target).value)"
+            class="w-full bg-transparent text-sm font-medium border-none focus:ring-0 p-0 text-blue-600 cursor-pointer">
+      <option value="">Any Religion</option>
+      <option value="Muslim">Muslim</option>
+      <option value="Hindu">Hindu</option>
+      <option value="Christian">Christian</option>
+      <option value="Buddha">Buddha</option>
+    </select>
+  </div>
+
+  <div class="border-b border-gray-100 pb-5">
+    <label class="text-[11px] uppercase tracking-wider font-black text-gray-400 mb-2 block">Education</label>
+    <select [value]="filterService.selectedEducation()" (change)="filterService.selectedEducation.set($any($event.target).value)"
+            class="w-full bg-transparent text-sm font-medium border-none focus:ring-0 p-0 text-blue-600 cursor-pointer">
+      <option value="">Any Medium</option>
+      <option value="Bangla Medium (National Curriculum)">Bangla Medium</option>
+      <option value="English Version (National Curriculum)">English Version</option>
+      <option value="English Medium (O/A Levels / Edexcel)">English Medium</option>
+      <option value="Madrasah (Aliya)">Madrasah (Aliya)</option>
+    </select>
+  </div>
+
+  <button (click)="filterService.resetAll()" class="hidden md:block text-left text-xs font-bold text-blue-600 hover:underline">
+    Clear all filters
   </button>
 </div>
