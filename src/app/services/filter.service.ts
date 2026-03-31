@@ -12,8 +12,8 @@ export class FilterService {
   selectedStatus = signal<string>('');
   selectedReligion = signal<string>('');
   selectedEducation = signal<string>('');
-  ageStart = signal<number>(18);
-  ageEnd = signal<number>(50);
+  ageStart = signal<number | null>(null);
+  ageEnd = signal<number | null>(null);
   ageOptions = Array.from({ length: 33 }, (_, i) => i + 18);
 
   constructor() {
@@ -28,8 +28,8 @@ export class FilterService {
         status: this.selectedStatus(),
         religion: this.selectedReligion(),
         education: this.selectedEducation(),
-        ageStart: this.ageStart(),
-        ageEnd: this.ageEnd()
+        ageStart: this.ageStart() ?? 18, 
+        ageEnd: this.ageEnd() ?? 70
       };
 
       console.log("GENDER IS NOW:", this.selectedGender());
@@ -46,7 +46,7 @@ export class FilterService {
     this.selectedStatus.set('');
     this.selectedReligion.set('');
     this.selectedEducation.set('');
-    this.ageStart.set(18);
-    this.ageEnd.set(50);
+    this.ageStart.set(null);
+    this.ageEnd.set(null);
   }
 }

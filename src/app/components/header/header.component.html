@@ -1,54 +1,73 @@
-<header class="flex items-center justify-between px-4 h-14 bg-white sticky top-0 z-50">
-  
-  <div class="flex items-center gap-2">
-    <button (click)="uiService.toggleSidebar()" class="p-2 hover:bg-gray-100 rounded-full transition">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-      </svg>
-    </button>
-    <a href="/" class="text-xl font-bold text-slate-800">Officer Matrimony BD</a>
-  </div>
-
-  
-
-  <div class="flex-grow max-w-[720px] mx-4">
-    <div class="flex items-center w-full">
-      <div class="relative w-full group">
-        <input 
-          type="text" 
-          placeholder="Search profiles..." 
-          class="w-full h-10 px-4 py-2 border border-gray-300 rounded-l-full focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
-        />
+<div class="w-full bg-gray-50 border-b border-gray-200 py-1 px-4 md:px-8">
+  <div class="max-w-7xl mx-auto flex items-center justify-between text-[10px] md:text-[11px] text-gray-500 leading-none">
+    
+    <div class="flex items-center gap-3">
+      <div class="flex items-center gap-1">
+        <span class="text-slate-900">Hi!</span>
+        <button class="text-blue-600 hover:underline font-medium">Sign in</button>
+        <span class="text-slate-900">or</span>
+        <button class="text-blue-600 hover:underline font-medium">register</button>
       </div>
-      <button class="h-10 px-5 bg-gray-50 border border-l-0 border-gray-300 rounded-r-full hover:bg-gray-100 transition">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-600">
-          <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+      <div class="h-3 w-[1px] bg-gray-300 hidden md:block"></div> 
+      <button class="hidden md:block hover:text-slate-900 transition-colors">Help & Contact</button>
+    </div>
+
+    <div class="flex items-center gap-4">
+      <button class="flex items-center gap-1 hover:text-slate-900 transition-colors font-medium">
+        MyList
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-2.5 h-2.5 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
         </svg>
+      </button>
+      
+      <button class="relative p-0.5 hover:text-blue-600 transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+        </svg>
+        <span class="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 bg-red-500 rounded-full border border-white"></span>
       </button>
     </div>
   </div>
+</div>
 
-  <div class="flex items-center gap-3">
-    <button (click)="onPost()" 
-      class="flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 rounded-full text-sm font-medium transition">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-      </svg>
-      <span>Post</span>
-    </button>
+<header class="w-full bg-gray-50 py-4 px-4 md:px-8">
+  <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
+    
+    <div class="flex items-center gap-4 min-w-[220px]">
+      <button (click)="uiService.toggleSidebar()" class="p-2 hover:bg-gray-200 rounded-full transition md:hidden">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+      <h1 class="hidden md:block text-xl font-black text-slate-800 tracking-tight">
+        Officer Matrimony BD
+      </h1>
+    </div>
 
-    <button class="p-2 hover:bg-gray-100 rounded-full relative transition">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
-      </svg>
-      <span class="absolute top-2 right-2 w-2 h-2 bg-red-600 rounded-full border border-white"></span>
-    </button>
+    <div class="flex-1 max-w-2xl">
+      <div class="relative flex items-center">
+        <input 
+          type="text" 
+          placeholder="Search profiles..." 
+          class="w-full pl-5 pr-12 py-2.5 bg-white border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none shadow-sm transition-all text-sm"
+        >
+        <button class="absolute right-1 p-2.5 text-gray-400 hover:text-blue-600">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </button>
+      </div>
+    </div>
 
-    <button class="ml-1">
-      <div class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-white text-xs font-bold">
+    <div class="flex items-center gap-4 min-w-[220px] justify-end">
+      <button class="hidden md:flex items-center gap-1.5 bg-white border border-gray-200 px-5 py-2 rounded-full text-xs font-bold shadow-sm hover:shadow-md transition active:scale-95">
+        <span class="text-base text-blue-600">+</span> Post Profile
+      </button>
+
+      <div class="w-9 h-9 bg-slate-800 text-white rounded-full flex items-center justify-center text-xs font-bold cursor-pointer hover:ring-2 ring-offset-2 ring-slate-300 transition">
         JD
       </div>
-    </button>
-  </div>
+    </div>
 
+  </div>
 </header>

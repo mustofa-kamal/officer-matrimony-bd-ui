@@ -1,92 +1,118 @@
-<div class="flex flex-col gap-8 pb-20">
+<div class="flex flex-col gap-8 pb-20 overflow-x-hidden">
   
   <div class="border-b border-gray-100 pb-5">
     <label class="text-[11px] uppercase tracking-wider font-black text-gray-400 mb-3 block">Looking For</label>
     <div class="flex gap-2">
-      <button (click)="filterService.selectedGender.set('Male')" 
+      <button (click)="filterService.selectedGender.set(filterService.selectedGender() === 'Male' ? '' : 'Male')" 
               [class.bg-blue-600]="filterService.selectedGender() === 'Male'"
               [class.text-white]="filterService.selectedGender() === 'Male'"
               [class.border-blue-600]="filterService.selectedGender() === 'Male'"
-              class="flex-1 py-2 rounded-full border border-gray-200 text-xs font-bold transition-all hover:border-blue-300">Groom</button>
-      <button (click)="filterService.selectedGender.set('Female')" 
+              class="flex-1 py-2 rounded-full border border-gray-200 text-xs font-bold transition-all active:scale-95">
+        Groom
+      </button>
+      <button (click)="filterService.selectedGender.set(filterService.selectedGender() === 'Female' ? '' : 'Female')" 
               [class.bg-blue-600]="filterService.selectedGender() === 'Female'"
               [class.text-white]="filterService.selectedGender() === 'Female'"
               [class.border-blue-600]="filterService.selectedGender() === 'Female'"
-              class="flex-1 py-2 rounded-full border border-gray-200 text-xs font-bold transition-all hover:border-blue-300">Bride</button>
+              class="flex-1 py-2 rounded-full border border-gray-200 text-xs font-bold transition-all active:scale-95">
+        Bride
+      </button>
     </div>
   </div>
 
   <div class="border-b border-gray-100 pb-5">
     <label class="text-[11px] uppercase tracking-wider font-black text-gray-400 mb-3 block">Age Range</label>
     <div class="flex items-center gap-2">
-      <select [value]="filterService.ageStart()" (change)="filterService.ageStart.set(+$any($event.target).value)" 
-              class="flex-1 bg-transparent text-sm font-medium border-none focus:ring-0 cursor-pointer text-gray-700">
-        @for (age of filterService.ageOptions; track age) { <option [value]="age">{{age}} Years</option> }
+      <select [value]="filterService.ageStart() ?? ''" 
+              (change)="filterService.ageStart.set($any($event.target).value === '' ? null : +$any($event.target).value)" 
+              class="flex-1 bg-transparent text-sm font-medium border-none focus:ring-0 cursor-pointer text-gray-700 p-0 appearance-none">
+        <option value="">Any</option>
+        @for (age of filterService.ageOptions; track age) { <option [value]="age">{{age}}</option> }
       </select>
-      <span class="text-gray-300">~</span>
-      <select [value]="filterService.ageEnd()" (change)="filterService.ageEnd.set(+$any($event.target).value)"
-              class="flex-1 bg-transparent text-sm font-medium border-none focus:ring-0 cursor-pointer text-gray-700">
-        @for (age of filterService.ageOptions; track age) { <option [value]="age">{{age}} Years</option> }
+      <span class="text-gray-300 font-light">~</span>
+      <select [value]="filterService.ageEnd() ?? ''" 
+              (change)="filterService.ageEnd.set($any($event.target).value === '' ? null : +$any($event.target).value)"
+              class="flex-1 bg-transparent text-sm font-medium border-none focus:ring-0 cursor-pointer text-gray-700 p-0 text-right appearance-none">
+        <option value="">Any</option>
+        @for (age of filterService.ageOptions; track age) { <option [value]="age">{{age}}</option> }
       </select>
     </div>
   </div>
 
   <div class="border-b border-gray-100 pb-5">
-    <label class="text-[11px] uppercase tracking-wider font-black text-gray-400 mb-2 block">Service</label>
-    <select [value]="filterService.selectedArms()" (change)="filterService.selectedArms.set($any($event.target).value)"
-            class="w-full bg-transparent text-sm font-medium border-none focus:ring-0 p-0 text-blue-600 cursor-pointer">
-      <option value="">All Branches</option>
-      <option value="Army">Army</option>
-      <option value="Navy">Navy</option>
-      <option value="Air Force">Air Force</option>
-    </select>
+    <label class="text-[11px] uppercase tracking-wider font-black text-gray-400 mb-3 block">Service</label>
+    <div class="flex flex-col gap-y-3">
+      @for (item of [{l:'All Branches', v:''}, {l:'Army', v:'Army'}, {l:'Navy', v:'Navy'}, {l:'Air Force', v:'Air Force'}]; track item.v) {
+        <label class="flex items-center justify-between cursor-pointer group" (click)="filterService.selectedArms.set(item.v)">
+          <span [class.text-blue-600]="filterService.selectedArms() === item.v" class="text-sm font-medium text-gray-600 transition-colors">{{item.l}}</span>
+          <div [class.border-blue-600]="filterService.selectedArms() === item.v" class="w-4 h-4 rounded-full border-2 border-gray-300 flex items-center justify-center transition-all">
+            @if(filterService.selectedArms() === item.v) { <div class="w-2 h-2 bg-blue-600 rounded-full"></div> }
+          </div>
+        </label>
+      }
+    </div>
   </div>
 
   <div class="border-b border-gray-100 pb-5">
-    <label class="text-[11px] uppercase tracking-wider font-black text-gray-400 mb-2 block">Officer's Link</label>
-    <select [value]="filterService.selectedLinks()" (change)="filterService.selectedLinks.set($any($event.target).value)"
-            class="w-full bg-transparent text-sm font-medium border-none focus:ring-0 p-0 text-blue-600 cursor-pointer">
-      <option value="">Any Link</option>
-      <option value="Self">Self</option>
-      <option value="Parent">Parent</option>
-      <option value="GrandParent">Grand Parent</option>
-    </select>
+    <label class="text-[11px] uppercase tracking-wider font-black text-gray-400 mb-3 block">Officer's Link</label>
+    <div class="flex flex-col gap-y-3">
+      @for (item of [{l:'Any Link', v:''}, {l:'Self', v:'Self'}, {l:'Parent', v:'Parent'}, {l:'Grand Parent', v:'GrandParent'}]; track item.v) {
+        <label class="flex items-center justify-between cursor-pointer group" (click)="filterService.selectedLinks.set(item.v)">
+          <span [class.text-blue-600]="filterService.selectedLinks() === item.v" class="text-sm font-medium text-gray-600 transition-colors">{{item.l}}</span>
+          <div [class.border-blue-600]="filterService.selectedLinks() === item.v" class="w-4 h-4 rounded-full border-2 border-gray-300 flex items-center justify-center transition-all">
+            @if(filterService.selectedLinks() === item.v) { <div class="w-2 h-2 bg-blue-600 rounded-full"></div> }
+          </div>
+        </label>
+      }
+    </div>
   </div>
 
   <div class="border-b border-gray-100 pb-5">
-    <label class="text-[11px] uppercase tracking-wider font-black text-gray-400 mb-2 block">Status</label>
-    <select [value]="filterService.selectedStatus()" (change)="filterService.selectedStatus.set($any($event.target).value)"
-            class="w-full bg-transparent text-sm font-medium border-none focus:ring-0 p-0 text-blue-600 cursor-pointer">
-      <option value="">Any Status</option>
-      <option value="Single">Single</option>
-      <option value="Married">Married</option>
-      <option value="Divorced">Divorced</option>
-      <option value="Separated">Separated</option>
-    </select>
+    <label class="text-[11px] uppercase tracking-wider font-black text-gray-400 mb-3 block">Status</label>
+    <div class="flex flex-col gap-y-3">
+      @for (item of [{l:'Any Status', v:''}, {l:'Single', v:'Single'}, {l:'Married', v:'Married'}, {l:'Divorced', v:'Divorced'}, {l:'Separated', v:'Separated'}]; track item.v) {
+        <label class="flex items-center justify-between cursor-pointer group" (click)="filterService.selectedStatus.set(item.v)">
+          <span [class.text-blue-600]="filterService.selectedStatus() === item.v" class="text-sm font-medium text-gray-600 transition-colors">{{item.l}}</span>
+          <div [class.border-blue-600]="filterService.selectedStatus() === item.v" class="w-4 h-4 rounded-full border-2 border-gray-300 flex items-center justify-center transition-all">
+            @if(filterService.selectedStatus() === item.v) { <div class="w-2 h-2 bg-blue-600 rounded-full"></div> }
+          </div>
+        </label>
+      }
+    </div>
   </div>
 
   <div class="border-b border-gray-100 pb-5">
-    <label class="text-[11px] uppercase tracking-wider font-black text-gray-400 mb-2 block">Religion</label>
-    <select [value]="filterService.selectedReligion()" (change)="filterService.selectedReligion.set($any($event.target).value)"
-            class="w-full bg-transparent text-sm font-medium border-none focus:ring-0 p-0 text-blue-600 cursor-pointer">
-      <option value="">Any Religion</option>
-      <option value="Muslim">Muslim</option>
-      <option value="Hindu">Hindu</option>
-      <option value="Christian">Christian</option>
-      <option value="Buddha">Buddha</option>
-    </select>
+    <label class="text-[11px] uppercase tracking-wider font-black text-gray-400 mb-3 block">Religion</label>
+    <div class="flex flex-col gap-y-3">
+      @for (item of [{l:'Any Religion', v:''}, {l:'Muslim', v:'Muslim'}, {l:'Hindu', v:'Hindu'}, {l:'Christian', v:'Christian'}, {l:'Buddha', v:'Buddha'}]; track item.v) {
+        <label class="flex items-center justify-between cursor-pointer group" (click)="filterService.selectedReligion.set(item.v)">
+          <span [class.text-blue-600]="filterService.selectedReligion() === item.v" class="text-sm font-medium text-gray-600 transition-colors">{{item.l}}</span>
+          <div [class.border-blue-600]="filterService.selectedReligion() === item.v" class="w-4 h-4 rounded-full border-2 border-gray-300 flex items-center justify-center transition-all">
+            @if(filterService.selectedReligion() === item.v) { <div class="w-2 h-2 bg-blue-600 rounded-full"></div> }
+          </div>
+        </label>
+      }
+    </div>
   </div>
 
   <div class="border-b border-gray-100 pb-5">
-    <label class="text-[11px] uppercase tracking-wider font-black text-gray-400 mb-2 block">Education</label>
-    <select [value]="filterService.selectedEducation()" (change)="filterService.selectedEducation.set($any($event.target).value)"
-            class="w-full bg-transparent text-sm font-medium border-none focus:ring-0 p-0 text-blue-600 cursor-pointer">
-      <option value="">Any Medium</option>
-      <option value="Bangla Medium (National Curriculum)">Bangla Medium</option>
-      <option value="English Version (National Curriculum)">English Version</option>
-      <option value="English Medium (O/A Levels / Edexcel)">English Medium</option>
-      <option value="Madrasah (Aliya)">Madrasah (Aliya)</option>
-    </select>
+    <label class="text-[11px] uppercase tracking-wider font-black text-gray-400 mb-3 block">Education</label>
+    <div class="flex flex-col gap-y-4">
+      @for (item of [
+        {l:'Any Medium', v:''}, 
+        {l:'Bangla Medium', v:'Bangla Medium (National Curriculum)'}, 
+        {l:'English Version', v:'English Version (National Curriculum)'}, 
+        {l:'English Medium', v:'English Medium (O/A Levels / Edexcel)'}, 
+        {l:'Madrasah', v:'Madrasah (Aliya)'}
+      ]; track item.v) {
+        <label class="flex items-start justify-between cursor-pointer gap-4 group" (click)="filterService.selectedEducation.set(item.v)">
+          <span [class.text-blue-600]="filterService.selectedEducation() === item.v" class="text-sm font-medium text-gray-600 transition-colors leading-tight flex-1">{{item.l}}</span>
+          <div [class.border-blue-600]="filterService.selectedEducation() === item.v" class="w-4 h-4 rounded-full border-2 border-gray-300 flex-shrink-0 mt-0.5 flex items-center justify-center transition-all">
+            @if(filterService.selectedEducation() === item.v) { <div class="w-2 h-2 bg-blue-600 rounded-full"></div> }
+          </div>
+        </label>
+      }
+    </div>
   </div>
 
   <button (click)="filterService.resetAll()" class="hidden md:block text-left text-xs font-bold text-blue-600 hover:underline">
