@@ -2,16 +2,20 @@ export interface OfficerLinkProfile {
   id: number;
   name: string;
   age: number;
-  location: string;
+  gender: 'Male' | 'Female';
+  location: string; // Work Location
+  homeDistrict: string; // Home District
   imageUrl: string;
   isOnline: boolean;
   isFavorite: boolean;
   postedDate: Date;
-  gender: 'Male' | 'Female';
-  serviceBranch: string;
-  officerLink: string;
+  serviceBranch: 'Army' | 'Navy' | 'Air Force';
+  rank: string;
+  educationMedium: string;
+  institution: string;
   maritalStatus: string;
   religion: string;
-  // ADD THIS LINE TO FIX THE ERROR
-  educationMedium: string; 
+  officerLink: string;
+  height: string;
+  aboutMe: string;
 }

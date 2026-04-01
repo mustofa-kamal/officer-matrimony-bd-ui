@@ -95,36 +95,43 @@
           </div>
 
           <div class="flex-1">
-            <h3 class="text-xl font-black text-slate-900 mb-6">Professional & Personal Profile</h3>
+            <h3 class="text-xl font-black text-slate-900 mb-6">
+              Professional & Personal Profile
+            </h3>
             
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              <ng-container *ngTemplateOutlet="infoBadge; context: { icon: '🎖️', label: 'Rank', value: 'Army Captain' }"></ng-container>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+              <ng-container *ngTemplateOutlet="infoBadge; context: { icon: '🎖️', label: 'Rank', value: profileService.selectedProfile()?.rank }"></ng-container>
               <ng-container *ngTemplateOutlet="infoBadge; context: { icon: '⚔️', label: 'Service', value: profileService.selectedProfile()?.serviceBranch }"></ng-container>
+              <ng-container *ngTemplateOutlet="infoBadge; context: { icon: '📍', label: 'Work Location', value: profileService.selectedProfile()?.location }"></ng-container>
               <ng-container *ngTemplateOutlet="infoBadge; context: { icon: '🎓', label: 'Education', value: profileService.selectedProfile()?.educationMedium }"></ng-container>
-              <ng-container *ngTemplateOutlet="infoBadge; context: { icon: '🏛️', label: 'Institution', value: 'BUET' }"></ng-container>
+              <ng-container *ngTemplateOutlet="infoBadge; context: { icon: '🏛️', label: 'Institution', value: profileService.selectedProfile()?.institution }"></ng-container>
+              <ng-container *ngTemplateOutlet="infoBadge; context: { icon: '🏠', label: 'Home District', value: profileService.selectedProfile()?.homeDistrict }"></ng-container>
               <ng-container *ngTemplateOutlet="infoBadge; context: { icon: '📅', label: 'Age', value: profileService.selectedProfile()?.age }"></ng-container>
-              <ng-container *ngTemplateOutlet="infoBadge; context: { icon: '📏', label: 'Height', value: '5-10' }"></ng-container>
+              <ng-container *ngTemplateOutlet="infoBadge; context: { icon: '📏', label: 'Height', value: profileService.selectedProfile()?.height }"></ng-container>
               <ng-container *ngTemplateOutlet="infoBadge; context: { icon: '🌙', label: 'Religion', value: profileService.selectedProfile()?.religion }"></ng-container>
-              <ng-container *ngTemplateOutlet="infoBadge; context: { icon: '💍', label: 'Status', value: profileService.selectedProfile()?.maritalStatus }"></ng-container>
-              <ng-container *ngTemplateOutlet="infoBadge; context: { icon: '🔗', label: 'Link', value: 'Self' }"></ng-container>
             </div>
 
-            <div class="mt-12 bg-white p-8 rounded-[2rem] border border-gray-100 shadow-sm">
+            <div class="bg-white p-8 rounded-[2rem] border border-gray-100 shadow-sm mb-10">
               <h3 class="text-xl font-black text-slate-900 mb-4">About Me</h3>
               <p class="text-gray-600 text-base leading-relaxed font-medium">
-                A dedicated officer serving with pride... (Dynamic Bio Content)
+                {{ profileService.selectedProfile()?.aboutMe }}
               </p>
             </div>
 
-            <div class="flex flex-col sm:flex-row gap-4 mt-10 sticky bottom-6 md:static">
-              <button class="flex-1 bg-[#cd4a55] text-white py-4 rounded-2xl font-black text-base flex items-center justify-center gap-2 shadow-lg">
-                ❤️ Express Interest
-              </button>
-              <button class="flex-1 bg-[#5b8c9c] text-white py-4 rounded-2xl font-black text-base flex items-center justify-center gap-2 shadow-lg">
-                💬 Send Message
-              </button>
-            </div>
+           <div class="flex flex-col sm:flex-row gap-4 mt-10 md:mt-12 pb-10">
+            <button class="flex-1 bg-[#cd4a55] text-white py-4 rounded-2xl font-black text-base flex items-center justify-center gap-2 shadow-sm hover:shadow-md active:scale-95 transition-all">
+              ❤️ Express Interest
+            </button>
+            <button class="flex-1 bg-[#5b8c9c] text-white py-4 rounded-2xl font-black text-base flex items-center justify-center gap-2 shadow-sm hover:shadow-md active:scale-95 transition-all">
+              💬 Send Message
+            </button>
           </div>
+
+
+
+          </div>
+
+
         </div>
       </div>
     </main>
