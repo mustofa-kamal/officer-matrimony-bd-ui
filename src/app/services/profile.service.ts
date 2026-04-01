@@ -53,4 +53,18 @@ export class ProfileService {
   }
 
   profileCount = computed(() => this.displayProfiles().length);
+
+  selectedProfile = signal<OfficerLinkProfile | null>(null);
+
+  // Method to select a profile
+  viewProfile(profile: OfficerLinkProfile) {
+    this.selectedProfile.set(profile);
+    window.scrollTo(0, 0); // Reset scroll to top
+  }
+
+  // Method to go back
+  clearSelection() {
+    this.selectedProfile.set(null);
+  }
+
 }
