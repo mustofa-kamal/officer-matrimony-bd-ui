@@ -1,12 +1,12 @@
 <div class="w-full bg-gray-50 border-b border-gray-200 py-1 px-4 md:px-8">
-  <div class="max-w-7xl mx-auto flex items-center justify-between text-[10px] md:text-[11px] text-gray-500 leading-none">
+  <div class="w-full px-4 md:px-10 flex items-center justify-between text-[10px] md:text-[11px] text-gray-500 leading-none">
     
     <div class="flex items-center gap-3">
       <div class="flex items-center gap-1">
-        <span class="text-slate-900">Hi!</span>
-        <button class="text-blue-600 hover:underline font-medium">Sign in</button>
+        <span class="text-slate-900 font-medium">Hi!</span>
+        <button class="text-blue-600 hover:underline font-bold">Sign in</button>
         <span class="text-slate-900">or</span>
-        <button class="text-blue-600 hover:underline font-medium">register</button>
+        <button (click)="startRegistration()" class="text-blue-600 hover:underline font-bold">register</button>
       </div>
       <div class="h-3 w-[1px] bg-gray-300 hidden md:block"></div> 
       <button class="hidden md:block hover:text-slate-900 transition-colors">Help & Contact</button>
@@ -31,7 +31,7 @@
 </div>
 
 <header class="w-full bg-gray-50 py-4 px-4 md:px-8">
-  <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
+  <div class="w-full px-4 md:px-10 flex items-center justify-between gap-4">
     
     <div class="flex items-center gap-4 min-w-[220px]">
       <button (click)="uiService.toggleSidebar()" class="p-2 hover:bg-gray-200 rounded-full transition md:hidden">
@@ -39,7 +39,9 @@
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
       </button>
-      <h1 class="hidden md:block text-xl font-black text-slate-800 tracking-tight">
+
+      <h1 (click)="goToHome()" 
+          class="text-xl font-black text-slate-800 tracking-tight cursor-pointer hover:opacity-80 transition-opacity">
         Officer Matrimony BD
       </h1>
     </div>
@@ -60,8 +62,8 @@
     </div>
 
     <div class="flex items-center gap-4 min-w-[220px] justify-end">
-      <button class="hidden md:flex items-center gap-1.5 bg-white border border-gray-200 px-5 py-2 rounded-full text-xs font-bold shadow-sm hover:shadow-md transition active:scale-95">
-        <span class="text-base text-blue-600">+</span> Post Profile
+      <button (click)="startRegistration()" class="hidden md:flex items-center gap-1.5 bg-white border border-gray-200 px-5 py-2 rounded-full text-xs font-bold shadow-sm hover:shadow-md transition active:scale-95">
+        <span class="text-base text-blue-600 font-black">+</span> Post Profile
       </button>
 
       <div class="w-9 h-9 bg-slate-800 text-white rounded-full flex items-center justify-center text-xs font-bold cursor-pointer hover:ring-2 ring-offset-2 ring-slate-300 transition">

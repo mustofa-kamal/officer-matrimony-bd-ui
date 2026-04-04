@@ -1,8 +1,8 @@
-<div class="bg-gray-50 min-h-screen">
-  <app-header class="block bg-gray-50 border-b border-gray-200"></app-header>
+<div class="bg-gray-50 min-h-screen w-full overflow-x-hidden">
+  <app-header class="block bg-gray-50 border-b border-gray-200 w-full"></app-header>
 
-  @if (!profileService.selectedProfile()) {
-    <div class="flex max-w-[1440px] mx-auto relative">
+  @if (!uiService.isRegistering() && !profileService.selectedProfile()) {
+    <div class="flex w-full relative">
       
       <aside 
         [class.translate-x-0]="uiService.isSidebarVisible()" 
@@ -26,8 +26,8 @@
         </div>
       </aside>
 
-      <main class="flex-1 p-4 md:p-8">
-        <div class="max-w-7xl mx-auto">
+      <main class="flex-1 p-4 md:p-8 w-full">
+        <div class="w-full px-2 md:px-6"> 
           <div class="mb-8">
             <h2 class="text-2xl font-black text-slate-900 tracking-tight">Search Result</h2>
             <p class="text-gray-500 text-sm mt-1">
@@ -65,9 +65,9 @@
     </div>
   } 
 
-  @else {
-    <main class="flex-1 p-4 md:p-8 animate-in fade-in duration-500">
-      <div class="max-w-7xl mx-auto">
+  @else if (profileService.selectedProfile()) {
+    <main class="flex-1 p-4 md:p-8 animate-in fade-in duration-500 w-full">
+      <div class="w-full px-4 md:px-10">
         
         <button (click)="profileService.clearSelection()" 
                 class="flex items-center gap-2 mb-8 px-4 py-2 bg-white border border-gray-200 rounded-xl font-bold text-sm text-slate-700 hover:bg-gray-50 transition shadow-sm">
@@ -95,11 +95,9 @@
           </div>
 
           <div class="flex-1">
-            <h3 class="text-xl font-black text-slate-900 mb-6">
-              Professional & Personal Profile
-            </h3>
+            <h3 class="text-xl font-black text-slate-900 mb-6">Professional & Personal Profile</h3>
             
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-8">
               <ng-container *ngTemplateOutlet="infoBadge; context: { icon: '🎖️', label: 'Rank', value: profileService.selectedProfile()?.rank }"></ng-container>
               <ng-container *ngTemplateOutlet="infoBadge; context: { icon: '⚔️', label: 'Service', value: profileService.selectedProfile()?.serviceBranch }"></ng-container>
               <ng-container *ngTemplateOutlet="infoBadge; context: { icon: '📍', label: 'Work Location', value: profileService.selectedProfile()?.location }"></ng-container>
@@ -118,21 +116,24 @@
               </p>
             </div>
 
-           <div class="flex flex-col sm:flex-row gap-4 mt-10 md:mt-12 pb-10">
-            <button class="flex-1 bg-[#cd4a55] text-white py-4 rounded-2xl font-black text-base flex items-center justify-center gap-2 shadow-sm hover:shadow-md active:scale-95 transition-all">
-              ❤️ Express Interest
-            </button>
-            <button class="flex-1 bg-[#5b8c9c] text-white py-4 rounded-2xl font-black text-base flex items-center justify-center gap-2 shadow-sm hover:shadow-md active:scale-95 transition-all">
-              💬 Send Message
-            </button>
+            <div class="flex flex-col sm:flex-row gap-4 mt-10 md:mt-12 pb-10">
+              <button class="flex-1 bg-[#cd4a55] text-white py-4 rounded-2xl font-black text-base flex items-center justify-center gap-2 shadow-sm hover:shadow-md active:scale-95 transition-all">
+                ❤️ Express Interest
+              </button>
+              <button class="flex-1 bg-[#5b8c9c] text-white py-4 rounded-2xl font-black text-base flex items-center justify-center gap-2 shadow-sm hover:shadow-md active:scale-95 transition-all">
+                💬 Send Message
+              </button>
+            </div>
           </div>
-
-
-
-          </div>
-
-
         </div>
+      </div>
+    </main>
+  }
+
+  @else if (uiService.isRegistering()) {
+    <main class="w-full min-h-[calc(100vh-80px)] p-4 md:p-12 flex justify-center items-start animate-in fade-in zoom-in-95 duration-500">
+      <div class="w-full max-w-4xl">
+        <app-registration></app-registration>
       </div>
     </main>
   }

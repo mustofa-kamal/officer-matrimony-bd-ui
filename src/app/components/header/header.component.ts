@@ -1,19 +1,29 @@
-import { Component, inject } from '@angular/core'; // Add inject
-import { CommonModule } from '@angular/common';
-import { UiService } from '../../services/ui.service'; // Import service
+// src/app/components/header/header.component.ts
+import { Component } from '@angular/core';
+import { UiService } from '../../services/ui.service';
+import { ProfileService } from '../../services/profile.service';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule],
-  templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  templateUrl: './header.component.html'
 })
 export class HeaderComponent {
-  // Inject it here as public
-  public uiService = inject(UiService);
+  constructor(
+    public uiService: UiService,
+    public profileService: ProfileService
+  ) {}
 
-  onPost() {
-    console.log('Post button clicked');
+  startRegistration() {
+    // Hide details and search results, show registration card
+    this.profileService.clearSelection();
+    this.uiService.isRegistering.set(true);
+    this.uiService.isSidebarVisible.set(false); // Close mobile menu if open
   }
+
+  goToHome() {
+  this.uiService.isRegistering.set(false); // Closes Registration
+  this.profileService.clearSelection();    // Closes Detail View
+  this.uiService.isSidebarVisible.set(false); // Closes Mobile Filters
+}
 }

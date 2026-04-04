@@ -5,6 +5,9 @@ export class UiService {
   // Sidebar starts as hidden on mobile by default
   isSidebarVisible = signal<boolean>(false);
 
+  // ADD THIS LINE
+  isRegistering = signal<boolean>(false);
+
   toggleSidebar() {
     // 1. Toggle the value once
     const newState = !this.isSidebarVisible();
