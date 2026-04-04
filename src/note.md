@@ -21,4 +21,8 @@ Step 2–6: Append/Merge new fields into that same document using { merge: true 
 
 - Now do only Step 1 as according to  the attached image: step-1.jpeg
 
-- 
+
+
+
+
+- previously, I aked you to use card.jpg to give similar looks. But same look taking more space, please modify the code - to take smaller space, clear and should give feels to user that not too many field to fill up. more from friendly ui, therefore remove the card.jpg that we use before, it does not need to give similar looks and feels, the main idea is form friendly ui and give feeling no too many fields

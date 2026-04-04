@@ -36,7 +36,7 @@ export class RegistrationComponent implements OnInit {
 
   constructor(
     public regService: RegistrationService,
-    private uiService: UiService
+    public uiService: UiService
   ) {}
 
   ngOnInit() {
