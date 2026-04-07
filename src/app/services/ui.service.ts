@@ -8,6 +8,10 @@ export class UiService {
   // ADD THIS LINE
   isRegistering = signal<boolean>(false);
 
+  // src/app/services/ui.service.ts
+  isLandingPage = signal<boolean>(true); // Start on the new Hero search
+
+
   toggleSidebar() {
     // 1. Toggle the value once
     const newState = !this.isSidebarVisible();

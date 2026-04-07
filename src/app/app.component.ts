@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
 import { FilterBarComponent } from './components/filter-bar/filter-bar.component';
@@ -9,6 +9,8 @@ import { RegistrationComponent } from './features/registration/registration.comp
 // 1. You must import these two
 import { UiService } from './services/ui.service'; 
 import { ProfileService } from './services/profile.service'; 
+
+
 
 @Component({
   selector: 'app-root',
@@ -30,4 +32,27 @@ export class AppComponent {
   public uiService = inject(UiService);
   public profileService = inject(ProfileService); 
   public filterService = inject(FilterService); // 2. Inject it here
+
+  // Inside app.component.ts
+districts = [
+  "Bagerhat", "Bandarban", "Barguna", "Barishal", "Bhola", "Bogra", "Brahmanbaria", "Chandpur", "Chapainawabganj", "Chattogram", "Chuadanga", "Comilla", "Cox's Bazar", "Dhaka", "Dinajpur", "Faridpur", "Feni", "Gaibandha", "Gazipur", "Gopalganj", "Habiganj", "Jamalpur", "Jashore", "Jhalokati", "Jhenaidah", "Joypurhat", "Khagrachari", "Khulna", "Kishoreganj", "Kurigram", "Kushtia", "Lakshmipur", "Lalmonirhat", "Madaripur", "Magura", "Manikganj", "Meherpur", "Moulvibazar", "Munshiganj", "Mymensingh", "Naogaon", "Narail", "Narayanganj", "Narsingdi", "Natore", "Netrokona", "Nilphamari", "Noakhali", "Pabna", "Panchagarh", "Patuakhali", "Pirojpur", "Rajbari", "Rajshahi", "Rangamati", "Rangpur", "Satkhira", "Shariatpur", "Sherpur", "Sirajganj", "Sunamganj", "Sylhet", "Tangail", "Thakurgaon"
+].sort();
+
+ages = Array.from({ length: 63 }, (_, i) => i + 18); // 18 to 80
+
+// 1. Add a new signal to track active filter
+activeQuickFilter = signal<string | null>(null);
+
+onQuickFilter(category: string) {
+  console.log('Populating area for:', category);
+ // If the same filter is clicked again, toggle it off
+  if (this.activeQuickFilter() === category) {
+    this.activeQuickFilter.set(null);
+  } else {
+    this.activeQuickFilter.set(category);
+  }
+}
+
+
+
 }
