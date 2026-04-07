@@ -47,4 +47,16 @@ export class RegistrationService {
   getSavedData() {
     return JSON.parse(localStorage.getItem(this.STORAGE_KEY) || '{}');
   }
+
+  // Add to src/app/services/registration.service.ts
+    saveStep2Data(photoMetadata: any) {
+        const existingData = this.getSavedData();
+        const updatedData = {
+            ...existingData,
+            ...photoMetadata, // Contains filenames/sizes or "ready" status
+            stepReached: 2
+    };
+    localStorage.setItem('pending_registration', JSON.stringify(updatedData));
+}
+
 }
