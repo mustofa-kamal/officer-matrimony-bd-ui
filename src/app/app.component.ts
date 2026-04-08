@@ -53,6 +53,14 @@ onQuickFilter(category: string) {
   }
 }
 
+onProfessionClick(subCategory: string) {
+  console.log('Filtering profiles for:', subCategory);
+  // 1. Close the landing page
+  this.uiService.isLandingPage.set(false);
+  // 2. Trigger the filter in your profile service
+  this.profileService.applyFilters({ sub_category: subCategory });
+}
+
 
 
 }

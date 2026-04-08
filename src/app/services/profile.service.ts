@@ -15,6 +15,7 @@ export class ProfileService {
     const rawData = [
   {
     "id": "USER_01_BCS_ADMIN",
+    "isOnline": true,
     "personal_info": { 
       "full_name": "Mustafizur Rahman", 
       "gender": "Male", 
@@ -38,6 +39,7 @@ export class ProfileService {
   },
   {
     "id": "USER_02_BIZ_TECH",
+    "isOnline": false,
     "personal_info": { 
       "full_name": "Tanvir Ahmed", 
       "gender": "Male", 
@@ -61,6 +63,7 @@ export class ProfileService {
   },
   {
     "id": "USER_09_BIZ_BOUTIQUE",
+    "isOnline": true,
     "personal_info": { 
       "full_name": "Sultana Razia", 
       "gender": "Female", 
@@ -84,6 +87,7 @@ export class ProfileService {
   },
   {
     "id": "USER_03_BUET_STUDENT",
+    "isOnline": false,
     "personal_info": { 
       "full_name": "Fahim Shahriar", 
       "gender": "Male", 
@@ -97,8 +101,8 @@ export class ProfileService {
     },
     "images": { "primary": "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=400", "gallery": [] },
     "profession": {
-      "category": "Student",
-      "sub_category": "Graduate",
+      "category": "Graduate",
+      "sub_category": "Student",
       "details": { "institution_name": "BUET", "department": "CSE" },
       "monthly_income_range": "None"
     },
@@ -107,6 +111,7 @@ export class ProfileService {
   },
   {
     "id": "USER_04_SCHOOL_TEACHER",
+    "isOnline": true,
     "personal_info": { 
       "full_name": "Nusrat Jahan", 
       "gender": "Female", 
@@ -130,6 +135,7 @@ export class ProfileService {
   },
   {
     "id": "USER_05_ACADEMIA_NSU",
+    "isOnline": true,
     "personal_info": { 
       "full_name": "Abrar Hamza", 
       "gender": "Male", 
@@ -153,6 +159,7 @@ export class ProfileService {
   },
   {
     "id": "USER_06_BCS_POLICE",
+    "isOnline": false,
     "personal_info": { 
       "full_name": "Asif Talukder", 
       "gender": "Male", 
@@ -176,6 +183,7 @@ export class ProfileService {
   },
   {
     "id": "USER_07_ACADEMIA_DU",
+    "isOnline": true,
     "personal_info": { 
       "full_name": "Dr. Ariful Islam", 
       "gender": "Male", 
@@ -199,6 +207,7 @@ export class ProfileService {
   },
   {
     "id": "USER_08_BCS_FOREIGN",
+    "isOnline": true,
     "personal_info": { 
       "full_name": "Mehnaz Perveen", 
       "gender": "Female", 

@@ -26,4 +26,6 @@ export interface OfficerLinkProfile {
   };
   educationMedium: 'Bangla' | 'English' | 'Madrasah';
   postedDate: Date; // Keep this as Date
+  // ADD THIS LINE
+  isOnline: boolean;
 }
