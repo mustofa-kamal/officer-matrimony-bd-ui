@@ -92,13 +92,51 @@
 
         <div class="mt-10 pt-8 border-t border-gray-100">
           <div class="flex flex-wrap justify-center items-center gap-x-12 gap-y-4">
-            <a (click)="onQuickFilter('profession')" class="text-sm font-extrabold text-slate-600 hover:text-blue-600 cursor-pointer transition-colors border-b-2 border-transparent hover:border-blue-600 pb-1">Profession</a>
-            <a (click)="onQuickFilter('homeDistrict')" class="text-sm font-extrabold text-slate-600 hover:text-blue-600 cursor-pointer transition-colors border-b-2 border-transparent hover:border-blue-600 pb-1">Home District</a>
-            <a (click)="onQuickFilter('currentDistrict')" class="text-sm font-extrabold text-slate-600 hover:text-blue-600 cursor-pointer transition-colors border-b-2 border-transparent hover:border-blue-600 pb-1">Current District</a>
-            <a (click)="onQuickFilter('livingAbroad')" class="text-sm font-extrabold text-slate-600 hover:text-blue-600 cursor-pointer transition-colors border-b-2 border-transparent hover:border-blue-600 pb-1">Living Abroad</a>
-            <a (click)="onQuickFilter('education')" class="text-sm font-extrabold text-slate-600 hover:text-blue-600 cursor-pointer transition-colors border-b-2 border-transparent hover:border-blue-600 pb-1">College/Universities</a>
-          </div>
+          
+            <a (click)="onQuickFilter('profession')" 
+              [class.text-blue-600]="activeQuickFilter() === 'profession'"
+              [class.border-blue-600]="activeQuickFilter() === 'profession'"
+              class="text-sm font-extrabold text-slate-600 hover:text-blue-600 cursor-pointer transition-all border-b-2 border-transparent pb-1 flex items-center gap-1">
+              @if (activeQuickFilter() === 'profession') { <span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span> }
+              Profession
+            </a>
+
+            <a (click)="onQuickFilter('homeDistrict')" 
+              [class.text-blue-600]="activeQuickFilter() === 'homeDistrict'"
+              [class.border-blue-600]="activeQuickFilter() === 'homeDistrict'"
+              class="text-sm font-extrabold text-slate-600 hover:text-blue-600 cursor-pointer transition-all border-b-2 border-transparent pb-1 flex items-center gap-1">
+              @if (activeQuickFilter() === 'homeDistrict') { <span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span> }
+              Home District
+            </a>
+
+            <a (click)="onQuickFilter('currentDistrict')" 
+              [class.text-blue-600]="activeQuickFilter() === 'currentDistrict'"
+              [class.border-blue-600]="activeQuickFilter() === 'currentDistrict'"
+              class="text-sm font-extrabold text-slate-600 hover:text-blue-600 cursor-pointer transition-all border-b-2 border-transparent pb-1 flex items-center gap-1">
+              @if (activeQuickFilter() === 'currentDistrict') { <span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span> }
+              Current District
+            </a>
+
+            <a (click)="onQuickFilter('livingAbroad')" 
+              [class.text-blue-600]="activeQuickFilter() === 'livingAbroad'"
+              [class.border-blue-600]="activeQuickFilter() === 'livingAbroad'"
+              class="text-sm font-extrabold text-slate-600 hover:text-blue-600 cursor-pointer transition-all border-b-2 border-transparent pb-1 flex items-center gap-1">
+              @if (activeQuickFilter() === 'livingAbroad') { <span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span> }
+              Living Abroad
+            </a>
+
+            <a (click)="onQuickFilter('education')" 
+              [class.text-blue-600]="activeQuickFilter() === 'education'"
+              [class.border-blue-600]="activeQuickFilter() === 'education'"
+              class="text-sm font-extrabold text-slate-600 hover:text-blue-600 cursor-pointer transition-all border-b-2 border-transparent pb-1 flex items-center gap-1">
+              @if (activeQuickFilter() === 'education') { <span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span> }
+              College/Universities
+            </a>
+
         </div>
+      </div>
+
+
       </div>
 
       <div class="w-full max-w-7xl mt-8 px-6 animate-in fade-in duration-500">

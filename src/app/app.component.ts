@@ -40,17 +40,14 @@ districts = [
 
 ages = Array.from({ length: 63 }, (_, i) => i + 18); // 18 to 80
 
-// 1. Add a new signal to track active filter
-activeQuickFilter = signal<string | null>(null);
+// src/app/app.component.ts
+
+// Initialize with 'profession' so it renders on page load
+activeQuickFilter = signal<string | null>('profession'); 
 
 onQuickFilter(category: string) {
-  console.log('Populating area for:', category);
- // If the same filter is clicked again, toggle it off
-  if (this.activeQuickFilter() === category) {
-    this.activeQuickFilter.set(null);
-  } else {
-    this.activeQuickFilter.set(category);
-  }
+  // If clicking the already active one, we keep it active (or null if you prefer toggling)
+  this.activeQuickFilter.set(category);
 }
 
 onProfessionClick(subCategory: string) {
