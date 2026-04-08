@@ -29,8 +29,8 @@ export class ProfileService {
     },
     "images": { "primary": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=400", "gallery": [] },
     "profession": {
-      "category": "Employment",
-      "sub_category": "Civil Service",
+      "category": "Public Sector",
+      "sub_category": "BCS",
       "details": { "institution_name": "Dhaka University", "designation": "Assistant Commissioner" },
       "monthly_income_range": "60k - 80k BDT"
     },
@@ -101,8 +101,8 @@ export class ProfileService {
     },
     "images": { "primary": "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=400", "gallery": [] },
     "profession": {
-      "category": "Graduate",
-      "sub_category": "Student",
+      "category": "Student",
+      "sub_category": "Graduate",
       "details": { "institution_name": "BUET", "department": "CSE" },
       "monthly_income_range": "None"
     },
@@ -125,7 +125,7 @@ export class ProfileService {
     },
     "images": { "primary": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=400", "gallery": [] },
     "profession": {
-      "category": "Employment",
+      "category": "Education",
       "sub_category": "Teaching",
       "details": { "institution_name": "Scholastica", "designation": "Senior Teacher" },
       "monthly_income_range": "45k - 60k BDT"
@@ -149,7 +149,7 @@ export class ProfileService {
     },
     "images": { "primary": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=400", "gallery": [] },
     "profession": {
-      "category": "Employment",
+      "category": "Education",
       "sub_category": "Academia",
       "details": { "institution_name": "North South University (NSU)", "designation": "Lecturer" },
       "monthly_income_range": "80k - 110k BDT"
@@ -173,8 +173,8 @@ export class ProfileService {
     },
     "images": { "primary": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=400", "gallery": ["https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=400"] },
     "profession": {
-      "category": "Employment",
-      "sub_category": "Civil Service",
+      "category": "Public Sector",
+      "sub_category": "BCS",
       "details": { "institution_name": "Police Academy", "designation": "Assistant Commissioner (ASP)" },
       "monthly_income_range": "60k - 85k BDT"
     },
@@ -197,7 +197,7 @@ export class ProfileService {
     },
     "images": { "primary": "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=400", "gallery": [] },
     "profession": {
-      "category": "Employment",
+      "category": "Education",
       "sub_category": "Academia",
       "details": { "institution_name": "University of Dhaka (DU)", "designation": "Professor" },
       "monthly_income_range": "120k - 150k BDT"
@@ -221,14 +221,41 @@ export class ProfileService {
     },
     "images": { "primary": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=400", "gallery": [] },
     "profession": {
-      "category": "Employment",
-      "sub_category": "Civil Service",
+      "category": "Public Sector",
+      "sub_category": "BCS",
       "details": { "institution_name": "Ministry of Foreign Affairs", "designation": "Assistant Secretary" },
       "monthly_income_range": "70k - 95k BDT"
     },
     "educationMedium": "English",
     "postedDate": "2026-03-12T08:45:00Z"
-  }
+  },
+  {
+  "id": "USER_10_NON_CADRE_BANK",
+  "isOnline": true,
+  "personal_info": { 
+    "full_name": "Sajid Hasan", 
+    "gender": "Male", 
+    "date_of_birth": "1992-03-25", 
+    "marital_status": "Never Married",
+    "age": 34,
+    "homeDistrict": "Noakhali",
+    "height": "5'9\"",
+    "weight": "72kg",
+    "religion": "Islam"
+  },
+  "images": { "primary": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=400", "gallery": [] },
+  "profession": {
+    "category": "Public Sector",
+    "sub_category": "Government Service (Non-Cadre)",
+    "details": { 
+      "institution_name": "Sonali Bank PLC", 
+      "designation": "Senior Officer" 
+    },
+    "monthly_income_range": "50k - 70k BDT"
+  },
+  "educationMedium": "Bangla",
+  "postedDate": "2026-04-06T15:00:00Z"
+}
 ];
 
     // 2. MAPPING & SORTING
