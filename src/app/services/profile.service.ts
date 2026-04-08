@@ -301,19 +301,33 @@ export class ProfileService {
     this.selectedProfile.set(null);
   }
 
-  // src/app/services/profile.service.ts
+ 
 
-// Add to your computed properties section:
+// Define a 'computed' signal that automatically updates whenever 'displayProfiles' changes
 professionSummary = computed(() => {
+  
+  // 1. Create a temporary 'lookup' object (dictionary) to store counts
+  // The key is the profession name (string) and the value is the total (number)
   const counts: { [key: string]: number } = {};
   
-  this.rawProfiles.forEach(profile => {
+  // 2. Loop through every profile in your raw data array
+  this.displayProfiles().forEach(profile => {
+    
+    // Grab the sub_category (e.g., 'Civil Service') from the current profile
     const subCat = profile.profession.sub_category;
+    
+    // Increment the count for this category:
+    // If it's the first time we see it, start at 0 and add 1.
+    // Otherwise, take the existing count and add 1.
     counts[subCat] = (counts[subCat] || 0) + 1;
   });
 
-  // Convert to a sorted array for the UI
-  return Object.entries(counts).map(([name, count]) => ({ name, count }));
+  // 3. Transform the 'lookup' object into an array that the HTML can loop through
+  // Object.entries(counts) turns { 'Civil Service': 3 } into [['Civil Service', 3]]
+  return Object.entries(counts).map(([name, count]) => ({ 
+    name,   // This becomes the 'name' property (e.g., 'Civil Service')
+    count   // This becomes the 'count' property (e.g., 3)
+  }));
 });
 
 }
