@@ -273,20 +273,27 @@ export class ProfileService {
   }
 
   // 5. METHODS
+  // src/app/services/profile.service.ts
+
   applyFilters(criteria: any) {
-    // Reading from the rawProfiles signal using ()
     const filtered = this.rawProfiles().filter(profile => {
+      // Check for Sub-Category (used by the Landing Page links)
+      const matchSubCategory = !criteria.sub_category || 
+                              profile.profession.sub_category === criteria.sub_category;
+
+      // Check for other sidebar filters
       const matchGender = !criteria.gender || profile.personal_info.gender === criteria.gender;
       const matchStatus = !criteria.status || profile.personal_info.marital_status === criteria.status;
-      const matchReligion = !criteria.religion || profile.personal_info.religion === criteria.religion;
       
+      // Age logic
       const start = criteria.ageStart ?? 18;
       const end = criteria.ageEnd ?? 80;
       const matchAge = profile.personal_info.age >= start && profile.personal_info.age <= end;
 
-      return matchGender && matchStatus && matchReligion && matchAge;
+      return matchSubCategory && matchGender && matchStatus && matchAge;
     });
 
+    // Update the 'Display Shelf' signal
     this.displayProfiles.set(filtered);
   }
 

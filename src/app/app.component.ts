@@ -50,12 +50,18 @@ onQuickFilter(category: string) {
   this.activeQuickFilter.set(category);
 }
 
+// src/app/app.component.ts
+
 onProfessionClick(subCategory: string) {
-  console.log('Filtering profiles for:', subCategory);
-  // 1. Close the landing page
-  this.uiService.isLandingPage.set(false);
-  // 2. Trigger the filter in your profile service
+  // 1. Tell the service to filter the data
+  // We pass the sub_category so applyFilters can do its job
   this.profileService.applyFilters({ sub_category: subCategory });
+
+  // 2. Hide the landing page to reveal the Listing Page (@else block in HTML)
+  this.uiService.isLandingPage.set(false);
+
+  // 3. Optional: Smooth scroll to top so results are visible immediately
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 

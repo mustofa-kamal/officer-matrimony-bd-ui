@@ -9,7 +9,7 @@ export class UiService {
   isRegistering = signal<boolean>(false);
 
   // src/app/services/ui.service.ts
-  isLandingPage = signal<boolean>(true); // Start on the new Hero search
+  isLandingPage = signal<boolean>(true); 
 
 
   toggleSidebar() {

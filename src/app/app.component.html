@@ -11,7 +11,43 @@
 
   @else if (profileService.selectedProfile()) {
     <main class="flex-1 p-4 md:p-8 animate-in fade-in duration-500 w-full">
-      </main>
+      <div class="w-full px-4 md:px-10">
+        <button (click)="profileService.clearSelection()" 
+                class="flex items-center gap-2 mb-8 px-4 py-2 bg-white border border-gray-200 rounded-xl font-bold text-sm text-slate-700 hover:bg-gray-50 transition shadow-sm">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          Back to Search
+        </button>
+
+        <div class="flex flex-col md:flex-row gap-10">
+          <div class="w-full md:w-[400px] flex-none">
+            <div class="bg-white p-3 rounded-[2.5rem] shadow-sm border border-gray-100">
+              <img [src]="profileService.selectedProfile()?.images?.primary" class="w-full aspect-[4/5] object-cover rounded-[2rem]">
+              <div class="p-5">
+                <h2 class="text-2xl font-black text-slate-900">
+                  {{ profileService.selectedProfile()?.personal_info?.full_name }}, 
+                  {{ profileService.selectedProfile()?.personal_info?.age }}
+                </h2>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex-1">
+            <h3 class="text-xl font-black text-slate-900 mb-6">Professional & Personal Profile</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-8">
+              <ng-container *ngTemplateOutlet="infoBadge; context: { icon: '🏛️', label: 'Institution', value: profileService.selectedProfile()?.profession?.details?.institution_name || 'N/A' }"></ng-container>
+              <ng-container *ngTemplateOutlet="infoBadge; context: { icon: '🏠', label: 'Home District', value: profileService.selectedProfile()?.personal_info?.homeDistrict }"></ng-container>
+              <ng-container *ngTemplateOutlet="infoBadge; context: { icon: '📅', label: 'Age', value: profileService.selectedProfile()?.personal_info?.age }"></ng-container>
+              <ng-container *ngTemplateOutlet="infoBadge; context: { icon: '📏', label: 'Height', value: profileService.selectedProfile()?.personal_info?.height }"></ng-container>
+              <ng-container *ngTemplateOutlet="infoBadge; context: { icon: '⚖️', label: 'Weight', value: profileService.selectedProfile()?.personal_info?.weight }"></ng-container>
+              <ng-container *ngTemplateOutlet="infoBadge; context: { icon: '🌙', label: 'Religion', value: profileService.selectedProfile()?.personal_info?.religion }"></ng-container>
+              <ng-container *ngTemplateOutlet="infoBadge; context: { icon: '🎓', label: 'Medium', value: profileService.selectedProfile()?.educationMedium }"></ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
   }
 
   @else if (uiService.isLandingPage()) {
@@ -49,7 +85,7 @@
           </div>
 
           <div class="flex flex-col gap-2">
-            <label class="text-[11px] font-black uppercase tracking-widest text-slate-400 ml-1">Status</label>
+            <label class="text-[11px] font-black uppercase tracking-widest text-slate-400 ml-1">Marital Status</label>
             <select class="h-12 w-full border border-gray-200 rounded-xl px-4 text-sm font-bold text-slate-700 bg-slate-50 outline-none focus:border-blue-500">
               <option>Never Married</option>
               <option>Divorced</option>
@@ -59,8 +95,9 @@
           </div>
 
           <div class="flex flex-col gap-2">
-            <label class="text-[11px] font-black uppercase tracking-widest text-slate-400 ml-1">Home District</label>
+            <label class="text-[11px] font-black uppercase tracking-widest text-slate-400 ml-1">District</label>
             <select class="h-12 w-full border border-gray-200 rounded-xl px-4 text-sm font-bold text-slate-700 bg-slate-50 outline-none focus:border-blue-500">
+              <option value="">All Districts</option>
               @for (dist of districts; track dist) { <option [value]="dist">{{dist}}</option> }
             </select>
           </div>
@@ -88,79 +125,145 @@
               </select>
             </div>
           </div>
+
         </div>
 
-        <div class="mt-10 pt-8 border-t border-gray-100">
-          <div class="flex flex-wrap justify-center items-center gap-x-12 gap-y-4">
+      <div class="mt-10 pt-8 border-t border-gray-100">
+        <div class="flex flex-wrap justify-center items-center gap-x-12 gap-y-4">
           
-            <a (click)="onQuickFilter('profession')" 
-              [class.text-blue-600]="activeQuickFilter() === 'profession'"
-              [class.border-blue-600]="activeQuickFilter() === 'profession'"
-              class="text-sm font-extrabold text-slate-600 hover:text-blue-600 cursor-pointer transition-all border-b-2 border-transparent pb-1 flex items-center gap-1">
-              @if (activeQuickFilter() === 'profession') { <span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span> }
-              Profession
-            </a>
+          <a (click)="onQuickFilter('profession')" 
+            [class.text-blue-600]="activeQuickFilter() === 'profession'"
+            [class.border-blue-600]="activeQuickFilter() === 'profession'"
+            class="text-sm font-extrabold text-slate-600 hover:text-blue-600 cursor-pointer transition-all border-b-2 border-transparent pb-1 flex items-center gap-1">
+            @if (activeQuickFilter() === 'profession') { <span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span> }
+            Profession
+          </a>
 
-            <a (click)="onQuickFilter('homeDistrict')" 
-              [class.text-blue-600]="activeQuickFilter() === 'homeDistrict'"
-              [class.border-blue-600]="activeQuickFilter() === 'homeDistrict'"
-              class="text-sm font-extrabold text-slate-600 hover:text-blue-600 cursor-pointer transition-all border-b-2 border-transparent pb-1 flex items-center gap-1">
-              @if (activeQuickFilter() === 'homeDistrict') { <span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span> }
-              Home District
-            </a>
+          <a (click)="onQuickFilter('homeDistrict')" 
+            [class.text-blue-600]="activeQuickFilter() === 'homeDistrict'"
+            [class.border-blue-600]="activeQuickFilter() === 'homeDistrict'"
+            class="text-sm font-extrabold text-slate-600 hover:text-blue-600 cursor-pointer transition-all border-b-2 border-transparent pb-1 flex items-center gap-1">
+            @if (activeQuickFilter() === 'homeDistrict') { <span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span> }
+            Home District
+          </a>
 
-            <a (click)="onQuickFilter('currentDistrict')" 
-              [class.text-blue-600]="activeQuickFilter() === 'currentDistrict'"
-              [class.border-blue-600]="activeQuickFilter() === 'currentDistrict'"
-              class="text-sm font-extrabold text-slate-600 hover:text-blue-600 cursor-pointer transition-all border-b-2 border-transparent pb-1 flex items-center gap-1">
-              @if (activeQuickFilter() === 'currentDistrict') { <span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span> }
-              Current District
-            </a>
+          <a (click)="onQuickFilter('currentDistrict')" 
+            [class.text-blue-600]="activeQuickFilter() === 'currentDistrict'"
+            [class.border-blue-600]="activeQuickFilter() === 'currentDistrict'"
+            class="text-sm font-extrabold text-slate-600 hover:text-blue-600 cursor-pointer transition-all border-b-2 border-transparent pb-1 flex items-center gap-1">
+            @if (activeQuickFilter() === 'currentDistrict') { <span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span> }
+            Current District
+          </a>
 
-            <a (click)="onQuickFilter('livingAbroad')" 
-              [class.text-blue-600]="activeQuickFilter() === 'livingAbroad'"
-              [class.border-blue-600]="activeQuickFilter() === 'livingAbroad'"
-              class="text-sm font-extrabold text-slate-600 hover:text-blue-600 cursor-pointer transition-all border-b-2 border-transparent pb-1 flex items-center gap-1">
-              @if (activeQuickFilter() === 'livingAbroad') { <span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span> }
-              Living Abroad
-            </a>
+          <a (click)="onQuickFilter('livingAbroad')" 
+            [class.text-blue-600]="activeQuickFilter() === 'livingAbroad'"
+            [class.border-blue-600]="activeQuickFilter() === 'livingAbroad'"
+            class="text-sm font-extrabold text-slate-600 hover:text-blue-600 cursor-pointer transition-all border-b-2 border-transparent pb-1 flex items-center gap-1">
+            @if (activeQuickFilter() === 'livingAbroad') { <span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span> }
+            Living Abroad
+          </a>
 
-            <a (click)="onQuickFilter('education')" 
-              [class.text-blue-600]="activeQuickFilter() === 'education'"
-              [class.border-blue-600]="activeQuickFilter() === 'education'"
-              class="text-sm font-extrabold text-slate-600 hover:text-blue-600 cursor-pointer transition-all border-b-2 border-transparent pb-1 flex items-center gap-1">
-              @if (activeQuickFilter() === 'education') { <span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span> }
-              College/Universities
-            </a>
+          <a (click)="onQuickFilter('education')" 
+            [class.text-blue-600]="activeQuickFilter() === 'education'"
+            [class.border-blue-600]="activeQuickFilter() === 'education'"
+            class="text-sm font-extrabold text-slate-600 hover:text-blue-600 cursor-pointer transition-all border-b-2 border-transparent pb-1 flex items-center gap-1">
+            @if (activeQuickFilter() === 'education') { <span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span> }
+            College/Universities
+          </a>
 
         </div>
       </div>
 
+        
 
       </div>
 
       <div class="w-full max-w-7xl mt-8 px-6 animate-in fade-in duration-500">
         @if (activeQuickFilter() === 'profession') {
-          <div class="w-full bg-white rounded-3xl p-6 md:p-10 border border-gray-100 shadow-sm">
-            <div class="max-w-5xl mx-auto text-center">
-              <h3 class="text-[10px] font-black uppercase tracking-[0.3em] text-blue-600 mb-6">Browse by Profession</h3>
-              <div class="flex flex-wrap justify-center items-baseline text-slate-700">
+          <div class="w-full bg-white rounded-3xl p-6 md:p-10 border border-gray-100 shadow-sm text-center">
+             <h3 class="text-[10px] font-black uppercase tracking-[0.3em] text-blue-600 mb-6">Browse by Profession</h3>
+             <div class="flex flex-wrap justify-center items-baseline text-slate-700">
                 @for (item of profileService.professionSummary(); track item.name; let last = $last) {
                   <div class="inline-flex items-baseline">
-                    <a (click)="onProfessionClick(item.name)" class="text-[15px] font-bold hover:text-blue-600 cursor-pointer transition-colors whitespace-nowrap">
+                    <a (click)="onProfessionClick(item.name)" class="text-[15px] font-bold hover:text-blue-600 cursor-pointer whitespace-nowrap">
                       {{ item.name }}<span class="ml-0.5 text-slate-400 font-medium">({{ item.count }})</span>
                     </a>
                     @if (!last) { <span class="mr-[2px] text-slate-400">,</span><span class="w-[6px]"></span> }
                   </div>
                 }
               </div>
-            </div>
           </div>
         }
       </div>
     </main>
   }
 
+
+
+
+
+
+
+
+
+
   @else {
-    }
+    <div class="flex w-full min-h-screen relative animate-in fade-in duration-700">
+      <aside class="hidden md:flex flex-col w-72 border-r border-gray-200 bg-white sticky top-0 h-screen overflow-hidden">
+        <div class="flex-1 overflow-y-auto p-6 custom-scrollbar">
+          <app-filter-bar></app-filter-bar>
+        </div>
+      </aside>
+
+      <main class="flex-1 p-4 md:p-8 w-full bg-gray-50/30">
+        <div class="w-full px-2 md:px-6"> 
+          <div class="mb-8 flex justify-between items-end">
+            <div>
+              <h2 class="text-2xl font-black text-slate-900 tracking-tight">Search Result</h2>
+              <p class="text-gray-500 text-sm mt-1">
+                <span class="font-bold text-slate-800">{{ profileService.profileCount() }}</span> results found
+              </p>
+            </div>
+            <button (click)="uiService.isLandingPage.set(true)" class="text-xs font-bold text-blue-600 uppercase tracking-widest hover:underline">
+              ← New Search
+            </button>
+          </div>
+
+          <div class="flex flex-wrap gap-6 justify-center md:justify-start">
+            @for (profile of profileService.displayProfiles(); track profile.id) {
+              <div (click)="profileService.viewProfile(profile)" 
+                   class="w-[170px] bg-white rounded-[1.5rem] shadow-sm border border-gray-100 flex flex-col items-center p-3 transition-all hover:shadow-md cursor-pointer group">
+                
+                <div class="w-full aspect-square bg-slate-100 rounded-xl overflow-hidden mb-3">
+                  <img [src]="profile.images.primary" [alt]="profile.personal_info.full_name" class="w-full h-full object-cover object-top transition-transform duration-300 group-hover:scale-110">
+                </div>
+
+                <h3 class="text-[13px] font-extrabold text-black mb-0.5 text-center leading-tight">
+                  {{ profile.personal_info.full_name }}, {{ profile.personal_info.age }}
+                </h3>
+                <p class="text-gray-500 text-[10px] font-semibold mb-4 text-center">{{ profile.personal_info.homeDistrict }}</p>
+                
+                <div class="w-full flex justify-between items-center mt-auto px-1">
+                   <div [class.bg-green-500]="profile.isOnline" [class.bg-slate-200]="!profile.isOnline" class="w-2 h-2 rounded-full"></div>
+                  <span class="text-[8px] font-black text-blue-500 uppercase tracking-tighter bg-blue-50 px-1.5 py-0.5 rounded">
+                    {{ profile.profession.sub_category }}
+                  </span>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </main>
+    </div>
+  }
 </div>
+
+<ng-template #infoBadge let-icon="icon" let-label="label" let-value="value">
+  <div class="flex items-center gap-4 p-4 bg-white border border-gray-100 rounded-[1.5rem] shadow-sm">
+    <div class="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center text-xl">{{icon}}</div>
+    <div class="min-w-0">
+      <p class="text-[10px] uppercase tracking-widest font-black text-gray-400 mb-0.5">{{label}}</p>
+      <p class="text-sm font-black text-slate-800 truncate">{{value}}</p>
+    </div>
+  </div>
+</ng-template>

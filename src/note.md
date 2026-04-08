@@ -327,6 +327,30 @@ since there will be lot of sub_category and a lot of entry in the main content a
 
 Civil Service(3),Academia (2), Self-Employed(2), Teaching(1), Graduate Student(1) as link
 
+In landing page, by default Profession is selected and it's relevent link is rendered in the main content
+
+such as link
+Self-Employed(2), Academia(2), BCS(3) etc
+
+now implement the following:
+
+when user click Academia(2), for example, then the page will direct to profile listing page with filter on the right side and 2 profiles will be rendered. for your info - profile listing page is already 
+
+In this page there should be back button to return
+
+
+there was horizontal drop down called - Looking for, Religion, Marital Status, Drgree, Age (from) to Age(to) 
+
+but now missing 
+
+
+in app.component.html
+there was Home District, Living Abroad, College/UnibersityUniversity, etc link are missing
+
+
+
+
+
 
 
 
