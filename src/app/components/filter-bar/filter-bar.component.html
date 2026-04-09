@@ -70,7 +70,7 @@
   <div class="border-b border-gray-100 pb-5">
     <label class="text-[11px] uppercase tracking-wider font-black text-gray-400 mb-3 block">Status</label>
     <div class="flex flex-col gap-y-3">
-      @for (item of [{l:'Any Status', v:''}, {l:'Single', v:'Single'}, {l:'Married', v:'Married'}, {l:'Divorced', v:'Divorced'}, {l:'Separated', v:'Separated'}]; track item.v) {
+      @for (item of [{l:'Any Status', v:''}, {l:'Never Married', v:'Never Married'}, {l:'Married', v:'Married'}, {l:'Divorced', v:'Divorced'}, {l:'Separated', v:'Separated'}]; track item.v) {
         <label class="flex items-center justify-between cursor-pointer group" (click)="filterService.selectedStatus.set(item.v)">
           <span [class.text-blue-600]="filterService.selectedStatus() === item.v" class="text-sm font-medium text-gray-600 transition-colors">{{item.l}}</span>
           <div [class.border-blue-600]="filterService.selectedStatus() === item.v" class="w-4 h-4 rounded-full border-2 border-gray-300 flex items-center justify-center transition-all">
@@ -84,7 +84,7 @@
   <div class="border-b border-gray-100 pb-5">
     <label class="text-[11px] uppercase tracking-wider font-black text-gray-400 mb-3 block">Religion</label>
     <div class="flex flex-col gap-y-3">
-      @for (item of [{l:'Any Religion', v:''}, {l:'Muslim', v:'Muslim'}, {l:'Hindu', v:'Hindu'}, {l:'Christian', v:'Christian'}, {l:'Buddha', v:'Buddha'}]; track item.v) {
+      @for (item of [{l:'Any Religion', v:''}, {l:'Islam', v:'Islam'}, {l:'Hindu', v:'Hindu'}, {l:'Christian', v:'Christian'}, {l:'Buddha', v:'Buddha'}]; track item.v) {
         <label class="flex items-center justify-between cursor-pointer group" (click)="filterService.selectedReligion.set(item.v)">
           <span [class.text-blue-600]="filterService.selectedReligion() === item.v" class="text-sm font-medium text-gray-600 transition-colors">{{item.l}}</span>
           <div [class.border-blue-600]="filterService.selectedReligion() === item.v" class="w-4 h-4 rounded-full border-2 border-gray-300 flex items-center justify-center transition-all">

@@ -10,6 +10,8 @@ export class ProfileService {
   // 2. Public signals for the UI
   displayProfiles = signal<OfficerLinkProfile[]>([]);
   selectedProfile = signal<OfficerLinkProfile | null>(null);
+  // Add this to store the "Quick Filter" state
+  private activeSubCategory = signal<string | null>(null);
 
   // 3. Computed signal for profile count
   profileCount = computed(() => this.displayProfiles().length);
@@ -276,28 +278,38 @@ export class ProfileService {
   // src/app/services/profile.service.ts
 
   applyFilters(criteria: any) {
-    const filtered = this.rawProfiles().filter(profile => {
-      // Check for Sub-Category (used by the Landing Page links)
-      const matchSubCategory = !criteria.sub_category || 
-                              profile.profession.sub_category === criteria.sub_category;
+    // If a sub_category is passed (from landing page), save it.
+    // If criteria is empty (reset), clear it.
+    if (criteria.sub_category) {
+      this.activeSubCategory.set(criteria.sub_category);
+    } else if (Object.keys(criteria).length === 0) {
+      this.activeSubCategory.set(null);
+    }
 
-      // Check for other sidebar filters
+    const filtered = this.rawProfiles().filter(profile => {
+      // 1. Always respect the active Sub-Category if one is set
+      const currentSub = this.activeSubCategory();
+      const matchSub = !currentSub || profile.profession.sub_category === currentSub;
+
+      // 2. Sidebar Filters
       const matchGender = !criteria.gender || profile.personal_info.gender === criteria.gender;
       const matchStatus = !criteria.status || profile.personal_info.marital_status === criteria.status;
+      const matchReligion = !criteria.religion || profile.personal_info.religion === criteria.religion;
       
-      // Age logic
+      const age = profile.personal_info.age;
       const start = criteria.ageStart ?? 18;
       const end = criteria.ageEnd ?? 80;
-      const matchAge = profile.personal_info.age >= start && profile.personal_info.age <= end;
+      const matchAge = age >= start && age <= end;
 
-      return matchSubCategory && matchGender && matchStatus && matchAge;
+      // Only return true if BOTH the Sub-Category AND the Sidebar filters match
+      return matchSub && matchGender && matchStatus && matchReligion && matchAge;
     });
 
-    // Update the 'Display Shelf' signal
     this.displayProfiles.set(filtered);
   }
 
   resetProfiles() {
+    this.activeSubCategory.set(null);
     this.displayProfiles.set(this.rawProfiles());
   }
 

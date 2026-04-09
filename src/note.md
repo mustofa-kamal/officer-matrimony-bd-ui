@@ -347,6 +347,18 @@ but now missing
 in app.component.html
 there was Home District, Living Abroad, College/UnibersityUniversity, etc link are missing
 
+------
+
+from the landing page, when I click
+Academia(2)
+
+it is rendering 2 profles of Academia correctly in the listing page
+
+but when click the left filter, it does not filter on that 2 profles. my expectation it sould filter on that 2 profiles only at that point, but it does not
+
+
+
+
 
 
 
