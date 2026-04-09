@@ -174,27 +174,49 @@
         </div>
       </div>
 
-        
+
 
       </div>
 
       <div class="w-full max-w-7xl mt-8 px-6 animate-in fade-in duration-500">
         @if (activeQuickFilter() === 'profession') {
-          <div class="w-full bg-white rounded-3xl p-6 md:p-10 border border-gray-100 shadow-sm text-center">
-             <h3 class="text-[10px] font-black uppercase tracking-[0.3em] text-blue-600 mb-6">Browse by Profession</h3>
-             <div class="flex flex-wrap justify-center items-baseline text-slate-700">
-                @for (item of profileService.professionSummary(); track item.name; let last = $last) {
-                  <div class="inline-flex items-baseline">
-                    <a (click)="onProfessionClick(item.name)" class="text-[15px] font-bold hover:text-blue-600 cursor-pointer whitespace-nowrap">
-                      {{ item.name }}<span class="ml-0.5 text-slate-400 font-medium">({{ item.count }})</span>
-                    </a>
-                    @if (!last) { <span class="mr-[2px] text-slate-400">,</span><span class="w-[6px]"></span> }
-                  </div>
-                }
-              </div>
+          <div class="w-full bg-white rounded-3xl p-8 md:p-12 border border-gray-100 shadow-sm text-center">
+            
+            <h3 class="text-[14px] font-black uppercase tracking-[0.4em] text-blue-600 mb-8">
+              Professional
+            </h3>
+
+            <div class="flex flex-wrap justify-center items-baseline text-slate-700 max-w-5xl mx-auto gap-y-4">
+              
+              @for (item of profileService.categorySummary(); track item.name) {
+                <div class="inline-flex items-baseline">
+                  <a (click)="onCategoryClick(item.name)" 
+                    class="text-[14px] font-bold hover:text-blue-600 cursor-pointer transition-colors whitespace-nowrap">
+                    {{ item.name }}<span class="ml-0.5 text-slate-400 font-normal text-[12px]">({{ item.count }})</span>
+                  </a>
+                  <span class="mx-3 text-slate-200 select-none">•</span> 
+                </div>
+              }
+
+              @for (item of profileService.subCategorySummary(); track item.name; let last = $last) {
+                <div class="inline-flex items-baseline">
+                  <a (click)="onSubCategoryClick(item.name)" 
+                    class="text-[14px] font-bold italic hover:text-blue-600 cursor-pointer transition-colors whitespace-nowrap">
+                    {{ item.name }}<span class="ml-0.5 text-slate-400 font-normal not-italic text-[12px]">({{ item.count }})</span>
+                  </a>
+                  @if (!last) { 
+                    <span class="mx-3 text-slate-200 select-none">•</span> 
+                  }
+                </div>
+              }
+
+            </div>
           </div>
         }
       </div>
+
+
+
     </main>
   }
 

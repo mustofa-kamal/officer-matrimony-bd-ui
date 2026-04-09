@@ -52,16 +52,16 @@ onQuickFilter(category: string) {
 
 // src/app/app.component.ts
 
-onProfessionClick(subCategory: string) {
-  // 1. Tell the service to filter the data
-  // We pass the sub_category so applyFilters can do its job
-  this.profileService.applyFilters({ sub_category: subCategory });
-
-  // 2. Hide the landing page to reveal the Listing Page (@else block in HTML)
+// When a user clicks a broad sector like "Public Sector"
+onCategoryClick(categoryName: string) {
+  this.profileService.applyFilters({ category: categoryName });
   this.uiService.isLandingPage.set(false);
+}
 
-  // 3. Optional: Smooth scroll to top so results are visible immediately
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+// When a user clicks a specific designation like "BCS" or "Academia"
+onSubCategoryClick(subCategoryName: string) {
+  this.profileService.applyFilters({ sub_category: subCategoryName });
+  this.uiService.isLandingPage.set(false);
 }
 
 

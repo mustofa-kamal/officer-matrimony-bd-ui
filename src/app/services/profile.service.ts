@@ -12,6 +12,7 @@ export class ProfileService {
   selectedProfile = signal<OfficerLinkProfile | null>(null);
   // Add this to store the "Quick Filter" state
   private activeSubCategory = signal<string | null>(null);
+  private activeCategory = signal<string | null>(null);
 
   // 3. Computed signal for profile count
   profileCount = computed(() => this.displayProfiles().length);
@@ -277,35 +278,44 @@ export class ProfileService {
   // 5. METHODS
   // src/app/services/profile.service.ts
 
-  applyFilters(criteria: any) {
-    // If a sub_category is passed (from landing page), save it.
-    // If criteria is empty (reset), clear it.
-    if (criteria.sub_category) {
-      this.activeSubCategory.set(criteria.sub_category);
-    } else if (Object.keys(criteria).length === 0) {
-      this.activeSubCategory.set(null);
-    }
+    applyFilters(criteria: any) {
+      // 1. Context Switching Logic
+      if (criteria.category) {
+        this.activeCategory.set(criteria.category);
+        this.activeSubCategory.set(null); // Clear sub-category
+      } 
+      else if (criteria.sub_category) {
+        this.activeSubCategory.set(criteria.sub_category);
+        this.activeCategory.set(null); // Clear category
+      } 
+      else if (Object.keys(criteria).length === 0) {
+        // Reset path: clear everything
+        this.activeCategory.set(null);
+        this.activeSubCategory.set(null);
+      }
 
-    const filtered = this.rawProfiles().filter(profile => {
-      // 1. Always respect the active Sub-Category if one is set
-      const currentSub = this.activeSubCategory();
-      const matchSub = !currentSub || profile.profession.sub_category === currentSub;
+      // 2. The Filter Engine
+      const filtered = this.rawProfiles().filter(profile => {
+        const currentCat = this.activeCategory();
+        const currentSub = this.activeSubCategory();
 
-      // 2. Sidebar Filters
-      const matchGender = !criteria.gender || profile.personal_info.gender === criteria.gender;
-      const matchStatus = !criteria.status || profile.personal_info.marital_status === criteria.status;
-      const matchReligion = !criteria.religion || profile.personal_info.religion === criteria.religion;
-      
-      const age = profile.personal_info.age;
-      const start = criteria.ageStart ?? 18;
-      const end = criteria.ageEnd ?? 80;
-      const matchAge = age >= start && age <= end;
+        // Context Match: Does it match the clicked link from the Landing Page?
+        const matchContext = (!currentCat || profile.profession.category === currentCat) &&
+                            (!currentSub || profile.profession.sub_category === currentSub);
 
-      // Only return true if BOTH the Sub-Category AND the Sidebar filters match
-      return matchSub && matchGender && matchStatus && matchReligion && matchAge;
-    });
+        // Sidebar Matches: Standard search criteria
+        const matchGender = !criteria.gender || profile.personal_info.gender === criteria.gender;
+        const matchStatus = !criteria.status || profile.personal_info.marital_status === criteria.status;
+        
+        const age = profile.personal_info.age;
+        const start = criteria.ageStart ?? 18;
+        const end = criteria.ageEnd ?? 80;
+        const matchAge = age >= start && age <= end;
 
-    this.displayProfiles.set(filtered);
+        return matchContext && matchGender && matchStatus && matchAge;
+      });
+
+      this.displayProfiles.set(filtered);
   }
 
   resetProfiles() {
@@ -322,19 +332,29 @@ export class ProfileService {
     this.selectedProfile.set(null);
   }
 
-  // Define a 'computed' signal that automatically updates whenever 'rawProfiles' changes
-  professionSummary = computed(() => {
-    const counts: { [key: string]: number } = {};
-    
-    // Using rawProfiles() ensures the landing page shows the full catalog
-    this.rawProfiles().forEach(profile => {
-      const subCat = profile.profession.sub_category;
-      counts[subCat] = (counts[subCat] || 0) + 1;
-    });
-
-    return Object.entries(counts).map(([name, count]) => ({ 
-      name,
-      count
-    }));
+  // 1. Summary for Main Categories (e.g., Public Sector, Business)
+categorySummary = computed(() => {
+  const counts: { [key: string]: number } = {};
+  this.rawProfiles().forEach(p => {
+    const val = p.profession.category;
+    counts[val] = (counts[val] || 0) + 1;
   });
+  return Object.entries(counts)
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([name, count]) => ({ name, count }));
+});
+
+// 2. Summary for Sub-Categories (e.g., BCS, Teaching, Self-Employed)
+subCategorySummary = computed(() => {
+  const counts: { [key: string]: number } = {};
+  this.rawProfiles().forEach(p => {
+    const val = p.profession.sub_category;
+    counts[val] = (counts[val] || 0) + 1;
+  });
+  return Object.entries(counts)
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([name, count]) => ({ name, count }));
+});
+
+
 }
