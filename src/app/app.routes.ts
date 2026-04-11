@@ -3,7 +3,12 @@ import { RegistrationComponent } from './features/registration/registration.comp
 import { HomeComponent } from './features/home/home.component';
 
 export const routes: Routes = [
-  { path: 'home', component: HomeComponent },
+  // This is your landing page (http://localhost:4200)
+  { path: '', component: HomeComponent }, 
+  
+  // This is your registration page (http://localhost:4200/registration)
   { path: 'registration', component: RegistrationComponent },
-  { path: '', redirectTo: 'home', pathMatch: 'full' } // Now it goes to Home by default
+  
+  // This catches everything else and sends it home
+  { path: '**', redirectTo: '' }
 ];

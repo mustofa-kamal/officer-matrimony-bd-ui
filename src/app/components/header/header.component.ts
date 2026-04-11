@@ -1,5 +1,5 @@
-// src/app/components/header/header.component.ts
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router'; // 1. Import Router
 import { UiService } from '../../services/ui.service';
 import { ProfileService } from '../../services/profile.service';
 
@@ -9,21 +9,25 @@ import { ProfileService } from '../../services/profile.service';
   templateUrl: './header.component.html'
 })
 export class HeaderComponent {
-  constructor(
-    public uiService: UiService,
-    public profileService: ProfileService
-  ) {}
+  public uiService = inject(UiService);
+  public profileService = inject(ProfileService);
+  private router = inject(Router); // 2. Inject Router
 
   startRegistration() {
-    // Hide details and search results, show registration card
     this.profileService.clearSelection();
+    
+    // 3. Navigate to the URL. This enables the Back button!
+    this.router.navigate(['/registration']);
+    
     this.uiService.isRegistering.set(true);
-    this.uiService.isSidebarVisible.set(false); // Close mobile menu if open
+    this.uiService.isSidebarVisible.set(false);
   }
 
   goToHome() {
-  this.uiService.isRegistering.set(false); // Closes Registration
-  this.profileService.clearSelection();    // Closes Detail View
-  this.uiService.isSidebarVisible.set(false); // Closes Mobile Filters
-}
+    // 4. Navigate back to Home
+    this.router.navigate(['/']);
+    
+    this.uiService.isRegistering.set(false);
+    this.profileService.clearSelection();
+  }
 }
