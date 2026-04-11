@@ -55,13 +55,13 @@ onQuickFilter(category: string) {
 // When a user clicks a broad sector like "Public Sector"
 onCategoryClick(categoryName: string) {
   this.profileService.applyFilters({ category: categoryName });
-  this.uiService.isLandingPage.set(false);
+  
 }
 
 // When a user clicks a specific designation like "BCS" or "Academia"
 onSubCategoryClick(subCategoryName: string) {
   this.profileService.applyFilters({ sub_category: subCategoryName });
-  this.uiService.isLandingPage.set(false);
+  
 }
 
 

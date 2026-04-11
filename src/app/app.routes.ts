@@ -1,14 +1,11 @@
 import { Routes } from '@angular/router';
-import { RegistrationComponent } from './features/registration/registration.component';
 import { HomeComponent } from './features/home/home.component';
+import { RegistrationComponent } from './features/registration/registration.component';
+import { ProfilesComponent } from './features/profiles/profiles.component';
 
 export const routes: Routes = [
-  // This is your landing page (http://localhost:4200)
-  { path: '', component: HomeComponent }, 
-  
-  // This is your registration page (http://localhost:4200/registration)
+  { path: '', component: HomeComponent },
   { path: 'registration', component: RegistrationComponent },
-  
-  // This catches everything else and sends it home
+  { path: 'profiles', component: ProfilesComponent }, // Clean URL for your gallery
   { path: '**', redirectTo: '' }
 ];
