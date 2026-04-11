@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RegistrationService } from '../../services/registration.service';
 import { UiService } from '../../services/ui.service';
 import { ImageStorageService } from '../../services/image-storage.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-registration',
@@ -39,7 +40,6 @@ export class RegistrationComponent implements OnInit {
     secondary2: null 
   };
 
-  // --- Dropdown Arrays ---
   days = Array.from({ length: 31 }, (_, i) => i + 1);
   months = [
     'January', 'February', 'March', 'April', 'May', 'June',
@@ -50,30 +50,46 @@ export class RegistrationComponent implements OnInit {
   constructor(
     public regService: RegistrationService,
     public uiService: UiService,
-    private imageStorage: ImageStorageService
+    private imageStorage: ImageStorageService,
+    private authService: AuthService // Correctly injected
   ) {}
 
-  ngOnInit() {
-    const saved = this.regService.getSavedData();
-    if (saved) {
-      // Restore Step 1 data
-      this.formData = { ...this.formData, ...saved };
-      
-      // Restore current step position from saved progress
-      if (saved.stepReached) {
-        this.regService.currentStep.set(saved.stepReached);
-      }
-    }
+  // 1. Update ngOnInit to be empty (or removed) since we aren't loading local drafts anymore
+ngOnInit() {
+  // We are starting fresh with Firebase, so we don't need to 'restore' local data here.
+}
+
+  // --- Simplified Step 1 Logic ---
+// 2. Update onSaveNext to pass the UID to the service
+async onSaveNext() {
+  if (!this.formData.email || !this.formData.password) {
+    alert("Please enter email and password.");
+    return;
   }
 
-  // ===============================
-  // STEP 1 LOGIC
-  // ===============================
-  onSaveNext() {
-    this.regService.saveStepData(this.formData);
-    this.regService.currentStep.set(2);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  try {
+    const result = await this.authService.signUp(
+      this.formData.email, 
+      this.formData.password, 
+      this.formData
+    );
+
+    if (result.success && result.uid) {
+      // Tell the registration service who the active user is
+      this.regService.setRegistrationId(result.uid);
+      
+      // Move to Step 2
+      this.regService.currentStep.set(2);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      
+      console.log("Cloud registration successful for UID:", result.uid);
+    } else {
+      alert("Registration failed: " + result.message);
+    }
+  } catch (err) {
+    console.error("Signup error:", err);
   }
+}
 
   // ===============================
   // STEP 2 LOGIC (Photo Upload)
@@ -84,7 +100,6 @@ export class RegistrationComponent implements OnInit {
       const file = input.files[0];
       this.selectedFiles[key] = file;
 
-      // Generate base64 preview for the UI
       const reader = new FileReader();
       reader.onload = () => {
         this.previews[key] = reader.result;
@@ -100,22 +115,24 @@ export class RegistrationComponent implements OnInit {
   }
 
   async onSaveStep2() {
+    // Now regService.registrationId() will return the Firebase UID 
+    // because we just created the user in Step 1
     const uid = this.regService.registrationId();
-    if (!uid) return;
+    if (!uid) {
+      alert("Session expired. Please restart registration.");
+      return;
+    }
 
     try {
-      // 1. Save actual Blobs to IndexedDB
       await this.imageStorage.savePhoto(uid, 'primary', this.selectedFiles['primary']!);
       await this.imageStorage.savePhoto(uid, 'secondary1', this.selectedFiles['secondary1']!);
       await this.imageStorage.savePhoto(uid, 'secondary2', this.selectedFiles['secondary2']!);
 
-      // 2. Update JSON progress in LocalStorage
       this.regService.saveStep2Data({
         hasPhotos: true,
         photoTimestamp: new Date().toISOString()
       });
 
-      // 3. Move to Step 3
       this.regService.currentStep.set(3);
       window.scrollTo({ top: 0, behavior: 'smooth' });
       
@@ -128,7 +145,6 @@ export class RegistrationComponent implements OnInit {
   resetStep2() {
     this.previews = { primary: null, secondary1: null, secondary2: null };
     this.selectedFiles = { primary: null, secondary1: null, secondary2: null };
-    // Reset file input elements manually if needed
     const inputs = document.querySelectorAll('input[type="file"]') as NodeListOf<HTMLInputElement>;
     inputs.forEach(input => input.value = '');
   }

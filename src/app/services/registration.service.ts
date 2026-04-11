@@ -1,62 +1,56 @@
-// src/app/services/registration.service.ts
 import { Injectable, signal } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class RegistrationService {
-  private STORAGE_KEY = 'pending_registration';
-  
-  // Track current step and registration ID
+  // We keep the step in memory so the UI can switch pages
   currentStep = signal<number>(1);
+  
+  // This will now be the Firebase UID
   registrationId = signal<string | null>(null);
 
-  constructor() {
-    this.resumeSession();
+  constructor() {}
+
+  /**
+   * Sets the Registration ID after Firebase creates the user.
+   * This links your Step 2 (Photos) to the correct user.
+   */
+  setRegistrationId(uid: string) {
+    this.registrationId.set(uid);
+    // We only store the UID locally so if they refresh at Step 2, 
+    // we know which user we are working with.
+    localStorage.setItem('active_uid', uid);
   }
 
-  // Generate or retrieve UID
-  private resumeSession() {
-    const saved = localStorage.getItem(this.STORAGE_KEY);
-    if (saved) {
-      const data = JSON.parse(saved);
-      this.registrationId.set(data.uid);
-    }
-  }
-
-  // The "Patch" Approach
+  /**
+   * We've removed the complex LocalStorage JSON saving.
+   * Step 1 data is now saved directly to Firestore via AuthService.
+   */
   saveStepData(data: any) {
-    if (!this.registrationId()) {
-      this.registrationId.set(crypto.randomUUID());
-    }
-
-    const existingData = JSON.parse(localStorage.getItem(this.STORAGE_KEY) || '{}');
-    const updatedData = {
-      ...existingData,
-      uid: this.registrationId(),
-      ...data,
-      lastUpdated: new Date().toISOString(),
-      stepReached: Math.max(existingData.stepReached || 1, this.currentStep())
-    };
-
-    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(updatedData));
-    console.log('Progress Saved (Local):', updatedData);
-    
-    // Future Firestore Hook:
-    // await setDoc(doc(db, "registrations", this.registrationId()), data, { merge: true });
+    console.log('Step 1 data received. Auth Service will handle the cloud save.');
+    this.currentStep.set(2);
   }
 
-  getSavedData() {
-    return JSON.parse(localStorage.getItem(this.STORAGE_KEY) || '{}');
+  /**
+   * Simple metadata update for Step 2
+   */
+  saveStep2Data(photoMetadata: any) {
+    console.log('Photos ready for:', this.registrationId());
+    this.currentStep.set(3);
   }
 
-  // Add to src/app/services/registration.service.ts
-    saveStep2Data(photoMetadata: any) {
-        const existingData = this.getSavedData();
-        const updatedData = {
-            ...existingData,
-            ...photoMetadata, // Contains filenames/sizes or "ready" status
-            stepReached: 2
-    };
-    localStorage.setItem('pending_registration', JSON.stringify(updatedData));
-}
+  /**
+   * Helper to retrieve the current UID from memory or storage
+   */
+  getUid(): string | null {
+    return this.registrationId() || localStorage.getItem('active_uid');
+  }
 
+  /**
+   * Call this when registration is fully finished to clean up
+   */
+  clearSession() {
+    this.registrationId.set(null);
+    this.currentStep.set(1);
+    localStorage.removeItem('active_uid');
+  }
 }

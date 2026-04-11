@@ -356,6 +356,9 @@ it is rendering 2 profles of Academia correctly in the listing page
 
 but when click the left filter, it does not filter on that 2 profles. my expectation it sould filter on that 2 profiles only at that point, but it does not
 
+------------------------
+Now, I shall start working on creating userid with email address and and registering, email address to to be varified with email send to that email address, and then ask user to login and create profile. I already have registration.component.ts I shall be using google firebase, becasue all profile will be save as json and update, this site will be deployed in google, give instruction, how to start with google firebase, login to firebase , etc
+
 
 
 
