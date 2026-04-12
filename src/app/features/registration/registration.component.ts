@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { RegistrationService } from '../../services/registration.service';
 import { UiService } from '../../services/ui.service';
@@ -8,7 +8,7 @@ import { AuthService } from '../../services/auth.service';
 
 @Component({
     selector: 'app-registration',
-    imports: [CommonModule, FormsModule],
+    imports: [FormsModule],
     templateUrl: './registration.component.html'
 })
 export class RegistrationComponent implements OnInit {

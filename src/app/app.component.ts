@@ -3,7 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
 import { FilterBarComponent } from './components/filter-bar/filter-bar.component';
 import { FilterService } from './services/filter.service'; // 1. Import it
-import { CommonModule } from '@angular/common'; // <--- MUST HAVE THIS
+ // <--- MUST HAVE THIS
 import { RegistrationComponent } from './features/registration/registration.component';
 
 // 1. You must import these two
@@ -15,12 +15,11 @@ import { ProfileService } from './services/profile.service';
 @Component({
     selector: 'app-root',
     imports: [
-        RouterOutlet,
-        HeaderComponent,
-        FilterBarComponent,
-        CommonModule,
-        RegistrationComponent
-    ],
+    RouterOutlet,
+    HeaderComponent,
+    FilterBarComponent,
+    RegistrationComponent
+],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss'
 })

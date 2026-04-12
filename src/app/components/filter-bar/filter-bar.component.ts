@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FilterService } from '../../services/filter.service'; // Adjust path if needed
 import { FormsModule } from '@angular/forms'; // <--- Add this
 
 @Component({
     selector: 'app-filter-bar',
-    imports: [CommonModule, FormsModule],
+    imports: [FormsModule],
     templateUrl: './filter-bar.component.html',
     styleUrl: './filter-bar.component.scss'
 })
