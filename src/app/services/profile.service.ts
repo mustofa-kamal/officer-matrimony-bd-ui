@@ -4,17 +4,20 @@ import { OfficerLinkProfile } from '../models/profile.model';
 @Injectable({ providedIn: 'root' })
 export class ProfileService {
   
-  // 1. Private signal for the source of truth
-  private rawProfiles = signal<OfficerLinkProfile[]>([]);
+  /**
+     * 1. SOURCE SIGNALS (The State)
+     * Think of these as the "raw inputs". When these change, anything 
+     * connected to them (computed signals) will also change.
+     */
+    private rawProfiles = signal<OfficerLinkProfile[]>([]); // All profiles from DB
+    private filterCriteria = signal<any>({});              // Sidebar filter values
+    private activeCategory = signal<string | null>(null);   // Selected profession group
+    private activeSubCategory = signal<string | null>(null);// Selected specific job
 
-  // 2. Public signals for the UI
-  displayProfiles = signal<OfficerLinkProfile[]>([]);
-  selectedProfile = signal<OfficerLinkProfile | null>(null);
-  // Add this to store the "Quick Filter" state
-  private activeSubCategory = signal<string | null>(null);
-  private activeCategory = signal<string | null>(null);
+    // A signal to track which single profile is being looked at
+    selectedProfile = signal<OfficerLinkProfile | null>(null);
 
-  // 3. Computed signal for profile count
+  // Automatically keeps the count accurate based on the filtered list above
   profileCount = computed(() => this.displayProfiles().length);
 
   constructor() {
@@ -272,55 +275,27 @@ export class ProfileService {
     this.rawProfiles.set(mappedData);
     
     // Initialize displayProfiles with the data from rawProfiles signal
-    this.displayProfiles.set(this.rawProfiles());
+   
   }
 
-  // 5. METHODS
-  // src/app/services/profile.service.ts
-
+  /**
+   * 4. ACTIONS (Methods)
+   * These are the only places where we manually .set() or .update() signals.
+   */
     applyFilters(criteria: any) {
-      // 1. Context Switching Logic
-      if (criteria.category) {
-        this.activeCategory.set(criteria.category);
-        this.activeSubCategory.set(null); // Clear sub-category
-      } 
-      else if (criteria.sub_category) {
-        this.activeSubCategory.set(criteria.sub_category);
-        this.activeCategory.set(null); // Clear category
-      } 
-      else if (Object.keys(criteria).length === 0) {
-        // Reset path: clear everything
-        this.activeCategory.set(null);
-        this.activeSubCategory.set(null);
-      }
-
-      // 2. The Filter Engine
-      const filtered = this.rawProfiles().filter(profile => {
-        const currentCat = this.activeCategory();
-        const currentSub = this.activeSubCategory();
-
-        // Context Match: Does it match the clicked link from the Landing Page?
-        const matchContext = (!currentCat || profile.profession.category === currentCat) &&
-                            (!currentSub || profile.profession.sub_category === currentSub);
-
-        // Sidebar Matches: Standard search criteria
-        const matchGender = !criteria.gender || profile.personal_info.gender === criteria.gender;
-        const matchStatus = !criteria.status || profile.personal_info.marital_status === criteria.status;
-        
-        const age = profile.personal_info.age;
-        const start = criteria.ageStart ?? 18;
-        const end = criteria.ageEnd ?? 80;
-        const matchAge = age >= start && age <= end;
-
-        return matchContext && matchGender && matchStatus && matchAge;
-      });
-
-      this.displayProfiles.set(filtered);
+    if (criteria.category) {
+      this.activeCategory.set(criteria.category);
+      this.activeSubCategory.set(null);
+    } else if (criteria.sub_category) {
+      this.activeSubCategory.set(criteria.sub_category);
+      this.activeCategory.set(null);
+    }
+    this.filterCriteria.set(criteria);
   }
 
   resetProfiles() {
     this.activeSubCategory.set(null);
-    this.displayProfiles.set(this.rawProfiles());
+   
   }
 
   viewProfile(profile: OfficerLinkProfile) {
@@ -332,7 +307,10 @@ export class ProfileService {
     this.selectedProfile.set(null);
   }
 
-  // 1. Summary for Main Categories (e.g., Public Sector, Business)
+  /**
+   * 3. AGGREGATION (Summaries)
+   * These create the lists of professions (with counts) seen on your Landing Page.
+   */
 categorySummary = computed(() => {
   const counts: { [key: string]: number } = {};
   this.rawProfiles().forEach(p => {
@@ -355,6 +333,32 @@ subCategorySummary = computed(() => {
     .sort(([a], [b]) => a.localeCompare(b))
     .map(([name, count]) => ({ name, count }));
 });
+
+  /**
+   * 2. DERIVED STATE (Computed Signals)
+   * These are READ-ONLY. You cannot .set() them. 
+   * They automatically re-calculate ONLY when their source signals change.
+   */
+  displayProfiles = computed(() => {
+    const raw = this.rawProfiles();
+    const criteria = this.filterCriteria();
+    const currentCat = this.activeCategory();
+    const currentSub = this.activeSubCategory();
+
+    return raw.filter(profile => {
+      // Logic from your old applyFilters moves here
+      const matchContext = (!currentCat || profile.profession?.category === currentCat) &&
+                          (!currentSub || profile.profession?.sub_category === currentSub);
+
+      const matchGender = !criteria.gender || profile.personal_info?.gender === criteria.gender;
+      const matchStatus = !criteria.status || profile.personal_info?.marital_status === criteria.status;
+      
+      const age = profile.personal_info?.age ?? 0;
+      const matchAge = age >= (criteria.ageStart ?? 18) && age <= (criteria.ageEnd ?? 80);
+
+      return matchContext && matchGender && matchStatus && matchAge;
+    });
+  });
 
 
 }
