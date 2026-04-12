@@ -7,10 +7,9 @@ import { ImageStorageService } from '../../services/image-storage.service';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
-  selector: 'app-registration',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './registration.component.html'
+    selector: 'app-registration',
+    imports: [CommonModule, FormsModule],
+    templateUrl: './registration.component.html'
 })
 export class RegistrationComponent implements OnInit {
   

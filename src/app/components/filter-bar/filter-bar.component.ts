@@ -4,11 +4,10 @@ import { FilterService } from '../../services/filter.service'; // Adjust path if
 import { FormsModule } from '@angular/forms'; // <--- Add this
 
 @Component({
-  selector: 'app-filter-bar',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './filter-bar.component.html',
-  styleUrl: './filter-bar.component.scss'
+    selector: 'app-filter-bar',
+    imports: [CommonModule, FormsModule],
+    templateUrl: './filter-bar.component.html',
+    styleUrl: './filter-bar.component.scss'
 })
 export class FilterBarComponent {
   // Inject the service here

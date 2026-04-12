@@ -10,16 +10,15 @@ import { Router } from '@angular/router';
 
 
 @Component({
-  selector: 'app-home',
-  standalone: true,
-  imports: [
-    CommonModule, 
-    RegistrationComponent, 
-    HeaderComponent, 
-    FilterBarComponent
-  ],
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+    selector: 'app-home',
+    imports: [
+        CommonModule,
+        RegistrationComponent,
+        HeaderComponent,
+        FilterBarComponent
+    ],
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
   // 1. Inject the REAL services

@@ -13,17 +13,16 @@ import { ProfileService } from './services/profile.service';
 
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [
-    RouterOutlet, 
-    HeaderComponent, 
-    FilterBarComponent,
-    CommonModule,
-    RegistrationComponent
-  ],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+    selector: 'app-root',
+    imports: [
+        RouterOutlet,
+        HeaderComponent,
+        FilterBarComponent,
+        CommonModule,
+        RegistrationComponent
+    ],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.scss'
 })
 export class AppComponent {
   title = 'officer-matrimony-bd-ui';

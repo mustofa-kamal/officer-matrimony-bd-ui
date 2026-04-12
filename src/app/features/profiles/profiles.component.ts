@@ -6,11 +6,10 @@ import { FilterBarComponent } from '../../components/filter-bar/filter-bar.compo
 import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-profiles',
-  standalone: true,
-  imports: [CommonModule, FilterBarComponent, RouterLink],
-  templateUrl: './profiles.component.html',
-  styleUrls: ['./profiles.component.scss']
+    selector: 'app-profiles',
+    imports: [CommonModule, FilterBarComponent, RouterLink],
+    templateUrl: './profiles.component.html',
+    styleUrls: ['./profiles.component.scss']
 })
 export class ProfilesComponent {
   public profileService = inject(ProfileService);
