@@ -1,10 +1,11 @@
 import { Component, inject, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
 import { FilterBarComponent } from './components/filter-bar/filter-bar.component';
 import { FilterService } from './services/filter.service'; // 1. Import it
  // <--- MUST HAVE THIS
 import { RegistrationComponent } from './features/registration/registration.component';
+import { filter } from 'rxjs/operators';
 
 // 1. You must import these two
 import { UiService } from './services/ui.service'; 
@@ -29,7 +30,18 @@ export class AppComponent {
   // 2. You must inject them as PUBLIC
   public uiService = inject(UiService);
   public profileService = inject(ProfileService); 
-  public filterService = inject(FilterService); // 2. Inject it here
+  public filterService = inject(FilterService); 
+  private router = inject(Router);
+
+  ngOnInit() {
+    // Watch every URL change across the entire application
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: any) => {
+      this.syncGlobalState(event.urlAfterRedirects);
+    });
+  }
+
 
   // Inside app.component.ts
 districts = [
@@ -62,6 +74,20 @@ onSubCategoryClick(subCategoryName: string) {
   
 }
 
+  private syncGlobalState(url: string) {
+    // 1. Handle Registration State
+    const isReg = url.includes('/registration');
+    this.uiService.isRegistering.set(isReg);
+
+    // 2. Handle Landing Page State
+    const isHome = url === '/' || url === '/home';
+    this.uiService.isLandingPage.set(isHome);
+
+    // 3. Auto-clear selection when leaving a profile view
+    if (!url.includes('/profile')) {
+      this.profileService.clearSelection();
+    }
+  }
 
 
 }

@@ -1,15 +1,15 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class UiService {
   // Sidebar starts as hidden on mobile by default
   isSidebarVisible = signal<boolean>(false);
+  private router = inject(Router);
 
-  // ADD THIS LINE
-  isRegistering = signal<boolean>(false);
-
-  // src/app/services/ui.service.ts
-  isLandingPage = signal<boolean>(true); 
+  // Initialize signals based on where the user landed
+  isLandingPage = signal(this.router.url === '/' || this.router.url === '/home');
+  isRegistering = signal(this.router.url.includes('/registration'));
 
 
   toggleSidebar() {
